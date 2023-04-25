@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr-fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/accueil.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/resulta.css">
+        <link rel="icon" href="/static/images/favicon.ico">
+        <title>LPO SADA SHOW</title>
+    </head>
+    <body>
+        <div class="main">
+            <header>
+                <nav>
+                    <div class="navbar">
+                        <div class="logo">
+                            <img src="/static/images/logo.png" alt="log LPO SADA SHOW">
+                            <!-- <h2 class="text-logo">LPO SADA SHOW</h2> -->
+                        </div>
+                        <div class="menu">
+                            <ul  class="nav-links">
+                                <li><a href="/">HOME</a></li>
+                                <li><a href="">ARTICLES</a></li>
+                                <li><a href="#">PODCAST</a></li>
+                                <li><a href="#">INTERVIEW</a></li>
+                                {% if connected == True %}
+                                    <li><a href="#">{{pseudo}}</a></li>
+                                    {%if role in wrRole%}
+                                        <li><a href="#">PARTAGER</a></li>
+                                    {% endif %}
+                                {% endif %}
+                            </ul>
+                            <img src="/static/images/hambuger-button.png" alt="" class="humber">
+                        </div>
+                        <div class="search">
+                            <form action="/recherche" method="post">
+                                <input type="search" name="search" id="search" class="serch-bar" placeholder="Chercher...">
+                                <a href="#"><button class="btn-search" type="submit">Chercher</button></a>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+            <div class="page">
+                {% block page %}{% endblock %}
+            </div>
+            <div class="footer ">
+                <footer>
+                  <div class="colum">
+                    <div class="line"><a href="https://github.com/Starkillere/LPO_SADA_SHOW" target="_blank">Documentation</a></div>
+                    <div class="line"><a href="https://github.com/Starkillere/LPO_SADA_SHOW" target="_blank">Dépôt Github</div>
+                  </div>
+                  <div class="colum">
+                    <div class="line"><a href="#">© <script>document.write(new Date().getFullYear());</script> par Ayouba Anrezki pour LPO SADA SHOW</h2></a></div>
+                  </div>
+                </footer>
+            </div>
+        </div>
+    </body>
+    <script>
+        const menuHamburger = document.querySelector(".humber")
+        const navLinks = document.querySelector(".nav-links")
+        
+        menuHamburger.addEventListener('click',()=>{
+        navLinks.classList.toggle('mobile-menu')
+        })
+    </script>
+</html>

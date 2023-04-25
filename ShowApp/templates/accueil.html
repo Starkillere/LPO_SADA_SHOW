@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block page %}
+<div class="accueil">
+    <div class="content">
+        <h1>Bienvenue sur<br><span class="auto-typing">LPO SADA SHOW !</span></h1>
+        <p>LPO SADA SHOW est un média social destiné au lycée de Sada.<br>Il propose aux étudiants<br>
+            une plateforme pour partager des informations et des contenus divers.</p>
+            <button class="Sug"><a href="#">suggestion</a></button>
+            <button class="cont"><a href="#">Voir le contenue</a></button>
+            {% if connected == False %}
+                <div class="form">
+                    <h2>Connection</h2>
+                    <form action="/login" method="post">
+                        <input type="email" name="email" class="email" placeholder="Email">
+                        <input type="password" name="password" class="password" placeholder="Mot de passse">
+                        <br><a href="#">mot de passe oublié</a><br>
+                        <button class="btn-log" type="submit">Connection</button>
+                        <p class="link">Vous n'avez pas de compte<br>
+                        <a href="/s-inscrire">Inscrivez vous ici</a></p>
+                    </form>
+                </div>
+            {% else %}
+                <div class="new">
+
+                </div>
+            {% endif %}
+    </div>
+</div>
+<script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+<script>
+    let typed = new Typed('.auto-typing', {
+        strings: ['LPO SADA SHOW !'],
+        typeSpeed: 100,
+        backSpeed: 100,
+        loop: true,
+        fadeOut: true,
+        fadeOutClass: 'type-fade-out',
+        fadeOutDelay: 500,
+        shuffle: true
+    }
+    )
+</script>
+{% endblock %}

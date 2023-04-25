@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% block page %}
+<div class="resulta">
+    <div class="form">
+        <form action="/resulta" method="post">
+            <input type="hidden" id="this_is_it" name="item">
+            <div class="vitrine">
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Article</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Vole de stylos au lycée</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Podcast</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Parlons sexe avec le proviseur</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Podcast</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Parlons sexe avec le proviseur</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Podcast</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Parlons sexe avec le proviseur</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Podcast</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Parlons sexe avec le proviseur</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Podcast</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Parlons sexe avec le proviseur</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Podcast</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Parlons sexe avec le proviseur</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                <button id="new" type="submit" onclick="send(this.id)">
+                    <div class="news">
+                        <div class="image">
+                            <img src="/static/images/pen.jpg" alt="">
+                        </div>
+                        <div class="description">
+                            <div class="categorie">
+                                <h2>Vidéo</h2>
+                            </div>
+                            <div class="title">
+                                <h1>Que pensez vous de la cantine</h1>
+                            </div>
+                            <div class="date">
+                                <p>12/05/2023 par Doudou</p>
+                            </div>
+                        </div>
+                    </div>
+                </button>
+                {% for new in news %}
+                    <button id="{{new[0]}}" type="submit" onclick="send(this.id)">
+                        <div class="news">
+                            <div class="image">
+                                <img src="" alt="">
+                            </div>
+                            <div class="description">
+                                <div class="categorie">
+                                    <h2>{{new[1]}}</h2>
+                                </div>
+                                <div class="title">
+                                    <h1>{{new[2]}}</h1>
+                                </div>
+                                <div class="date">
+                                    <p>{{new[3]}} par {{new[4]}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

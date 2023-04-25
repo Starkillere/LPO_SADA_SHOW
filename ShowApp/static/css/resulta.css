@@ -1,0 +1,74 @@
+.resulta
+{
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8)50%, rgba(0,0,0,0.8)50%);
+    position: absolute;
+    top:25%;
+    border-radius: 10px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 30px;
+    
+    
+}
+
+.resulta .form
+{
+    overflow:auto;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 10%;
+}
+
+
+.resulta .form .vitrine
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px 10px;
+}
+
+.resulta .form .vitrine button
+{
+    background: none;
+    border: none;
+    width: 250px;
+    height: 380px;
+    cursor: pointer;
+    color:white;
+    font-size: 9px;
+    text-align: left;
+}
+
+.resulta .form .vitrine button .image img
+{
+    width: 200px;
+    height: 300px;
+}
+
+.resulta .form .vitrine button .categorie
+{
+    font-family: 'Segoe UI';
+    background:-webkit-linear-gradient(top, rgb(74, 176, 250) 30%, rgb(42, 61, 247) 70%);
+    background-clip:text;
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.resulta .form .vitrine button .title
+{
+    font-family: Merriweather, MerriFallback, serif;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.resulta .form .vitrine button .date
+{
+    font-style: italic;
+    font-size: 10px;
+    color: rgb(129, 127, 127);
+}
+
+
+

@@ -1,0 +1,174 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+.main
+{
+    width: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.5),rgb(0, 0, 0, 0.3)), url(/static/images/background_LPO_SADA.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.navbar
+{
+    width: 1200px;
+    height: 75px;
+    margin: auto;
+}
+
+.logo
+{
+    width: 200px;
+    float: left;
+    height: 70px;
+}
+
+.logo img
+{
+    width: 200px;
+    height: 200px;
+    transform: rotate(-10deg);
+}
+
+.text-logo
+{
+    color:#058eec;
+    font-size: 35px;
+    padding-left: 20px;
+    float:left;
+    padding-top: 10px;
+}
+
+.menu
+{
+    width: 400px;
+    float: left;
+    height: 70px;
+}
+
+ul
+{
+   
+    float: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ul li
+{
+    margin-left: 62px;
+    margin-top: 27px;
+    font-size: 14px;
+}
+
+ul li a
+{
+    color: #fff;
+    font-size: Arial;
+    font-weight: bold;
+    transition: 0.4s ease-in-out;
+}
+
+ul li a:hover
+{
+    color: #058eec;
+}
+
+.search
+{
+    width: 330px;
+    float: left;
+    margin-left: 270px;
+}
+
+.serch-bar
+{
+    font-family: 'Times New Roman';
+    width: 210px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid #058eec;
+    margin-top: 13px;
+    color: #fff;
+    border-right: none;
+    font-size: 16px;
+    float: left;
+    padding: 10px;
+    border-bottom-left-radius: 30px;
+    border-top-left-radius: 30px;
+}
+
+.btn-search
+{
+    width: 100px;
+    height: 40px;
+    background: #058eec;
+    border: 2px solid #058eec;
+    margin-top: 13px;
+    color: #fff;
+    font-size: 15px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+
+}
+
+.btn-search:focus
+{
+    outline: none;
+}
+
+.serch-bar
+{
+    outline: none;
+}
+
+.humber
+{
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 50px;
+    width: 50px;
+}
+
+.footer
+{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:100px; 
+}
+
+.footer footer .colum
+{
+  display: flex;
+  justify-content: center;
+}
+
+.footer footer .colum div
+{
+  padding: 10px;
+}
+
+.footer footer .colum div a
+{
+  text-decoration: none;
+  color:#8f8f8f;
+  font-size: 20px;
+}
+
+.footer footer .colum div a:hover,
+.footer footer .colum div a:nth-child(2)
+{
+  color:#058eec
+}
