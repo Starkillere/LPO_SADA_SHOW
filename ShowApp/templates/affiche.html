@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block page %}
+<div class="affiche">
+    <div class="image_font">
+        <img src="{{new['img_font']}}" alt="">
+    </div>
+    <div class="box-text">
+        <div class="title">
+            <h2>{{new["title"]}}</h2>
+        </div>
+        <div class="description">
+            <p>{{new["description"]}}</p>
+        </div>
+        
+        {% if new["type"] == "article" %}
+            <div class="articles">
+                <div class="content">
+                    {{new["content"]|safe }}
+                </div>
+            </div>
+        {% elif new["type"] == "podcast" %}
+            <div class="podcastes">
+                <div class="aud">
+                    <audio src="{{new['content']}}"></audio>
+                </div>
+            </div>
+        {% elif new["type"] == "interview" %}
+            <div class="interviews">
+                <div class="vid">
+                    <video src="{{new['content']}}"></video>
+                </div>
+            </div>
+        {% endif %}
+        <div class="source">
+            <p>{{new["auteur"]}} {{new["date"]}}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+.affiche
+{
+    position: relative;
+    margin-top: 10%;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+    background-color: rgb(28, 28, 28);
+    color: #fff;
+    padding: 1%;
+}
+
+.affiche .image_font img
+{
+    width: 100%;
+    height: 300px;
+}
+
+.affiche .box-text
+{
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 2%;
+}
+
+.affiche .box-text .title
+{
+    border-bottom: 5px solid #058eec;
+    margin-bottom: 2%;
+}
+
+.affiche .box-text .title h2
+{
+    font-size: 50px;
+    line-height: 40px;
+    font-family: Merriweather, MerriFallback, serif;
+    font-style: normal;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    letter-spacing: 1.5px;
+    margin: 2rem 5px 20px;
+}
+
+
+.affiche p
+{
+    margin-bottom: 4rem;
+    font-family: Merriweather, MerriFallback, serif;
+    line-height: 2.5rem;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.affiche p
+{
+    font-size: 18px;
+    font-family: Halcom, sans-serif;
+    font-weight: 300;
+    line-height: 2rem;
+}
+
+.affiche .box-text .source
+{
+    padding-top: 2%;
+}
+
+.affiche .box-text .source p
+{
+    font-family: Halcom, sans-serif, sans-serif;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+    letter-spacing: 0.1em;
+    line-height: 140%;
+    text-transform: uppercase;
+    margin: 0.25rem 0px;
+    font-size: 12px !important;
+}

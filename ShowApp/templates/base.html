@@ -7,6 +7,10 @@
         <link rel="stylesheet" type="text/css" href="/static/css/base.css">
         <link rel="stylesheet" type="text/css" href="/static/css/accueil.css">
         <link rel="stylesheet" type="text/css" href="/static/css/resulta.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/affiche.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/edit_w.css">
+        <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
         <link rel="icon" href="/static/images/favicon.ico">
         <title>LPO SADA SHOW</title>
     </head>
@@ -22,11 +26,11 @@
                         <div class="menu">
                             <ul  class="nav-links">
                                 <li><a href="/">HOME</a></li>
-                                <li><a href="">ARTICLES</a></li>
-                                <li><a href="#">PODCAST</a></li>
-                                <li><a href="#">INTERVIEW</a></li>
+                                <li><a href="/resutlta/article">ARTICLES</a></li>
+                                <li><a href="/resutlta/podcast">PODCASTS</a></li>
+                                <li><a href="/resutlta/interview">INTERVIEWS</a></li>
                                 {% if connected == True %}
-                                    <li><a href="#">{{pseudo}}</a></li>
+                                    <li><a href="#">{{pseudo.upper()}}</a></li>
                                     {%if role in wrRole%}
                                         <li><a href="#">PARTAGER</a></li>
                                     {% endif %}
@@ -37,7 +41,7 @@
                         <div class="search">
                             <form action="/recherche" method="post">
                                 <input type="search" name="search" id="search" class="serch-bar" placeholder="Chercher...">
-                                <a href="#"><button class="btn-search" type="submit">Chercher</button></a>
+                                <button class="btn-search" type="submit">Chercher</button>
                             </form>
                         </div>
                     </div>
@@ -53,7 +57,7 @@
                     <div class="line"><a href="https://github.com/Starkillere/LPO_SADA_SHOW" target="_blank">Dépôt Github</div>
                   </div>
                   <div class="colum">
-                    <div class="line"><a href="#">© <script>document.write(new Date().getFullYear());</script> par Ayouba Anrezki pour LPO SADA SHOW</h2></a></div>
+                    <div class="line"><a href="https://github.com/Starkillere/">© <script>document.write(new Date().getFullYear());</script> LPO SADA SHOW par Ayouba Anrezki</h2></a></div>
                   </div>
                 </footer>
             </div>

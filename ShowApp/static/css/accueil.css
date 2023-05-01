@@ -160,3 +160,33 @@
     text-align: center;
     padding-bottom: 10px;
 }
+
+.accueil .content .new h2
+{
+    width: 220px;
+    font-family: sans-serif;
+    text-align: center;
+    color: #058eec;
+    font-size: 22px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 2px;
+    padding: 8px;
+}
+
+.accueil .content .new .title h1
+{
+    font-family: 'Times New Roman';
+    font-size: 25px;
+    padding-left: 20px;
+    color: rgb(255, 255, 255);
+    letter-spacing: 1.5px;
+}
+
+.accueil .content .new .image img
+{
+    width: 240px;
+    height: 150px;
+    margin: 2px;
+    padding: 8px;
+}

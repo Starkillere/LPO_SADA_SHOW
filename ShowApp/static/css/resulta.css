@@ -1,74 +1,120 @@
 .resulta
 {
-    width: 100%;
-    height: 60%;
-    background: linear-gradient(to top, rgba(0,0,0,0.8)50%, rgba(0,0,0,0.8)50%);
-    position: absolute;
-    top:25%;
-    border-radius: 10px;
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 30px;
-    
-    
-}
-
-.resulta .form
-{
-    overflow:auto;
+    position: relative;
+    margin-top: 10%;
     width: 100%;
     height: 100%;
-    padding-bottom: 10%;
+    background-color: rgb(28, 28, 28);
+    color: #fff;
+    padding-top: 10%;
+    padding-bottom: 20%;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 
+.resulta .header
+{
+    margin-bottom: 10%;
+    margin-left: 20%;
+    width: 500px;
+    height: min-content;
+}
 
-.resulta .form .vitrine
+.resulta .header .title h1
+{
+    font-family: Merriweather, MerriFallback, serif;
+    font-style: italic;
+    font-weight: 600;
+    border-left: 10px solid #058eec;
+    background: #fff;
+    filter: brightness(1.75);
+    color: black;
+    
+}
+
+.resulta .vitrine
 {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 20px 10px;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px 70px;
+    width: 100%;
 }
 
-.resulta .form .vitrine button
+.resulta .vitrine button
 {
-    background: none;
-    border: none;
-    width: 250px;
-    height: 380px;
+    border:none;
+    background-color: transparent;
+
+    width: 300px;
+    height: 400px;
+
+    padding: 0;
     cursor: pointer;
-    color:white;
-    font-size: 9px;
-    text-align: left;
 }
 
-.resulta .form .vitrine button .image img
+.resulta .vitrine button:hover
 {
-    width: 200px;
+    border-right: 3px solid white;
+    border-left: 3px solid white;
+}
+
+.resulta .vitrine button .news .image img
+{
+    width: 295px;
     height: 300px;
 }
 
-.resulta .form .vitrine button .categorie
+.resulta .vitrine button .news .description
 {
-    font-family: 'Segoe UI';
-    background:-webkit-linear-gradient(top, rgb(74, 176, 250) 30%, rgb(42, 61, 247) 70%);
-    background-clip:text;
-    -webkit-background-clip:text;
-    color:transparent;
+    padding: 1%;
+    text-align: left;
+    color: #fff;
 }
 
-.resulta .form .vitrine button .title
+.resulta .vitrine button .news .description .categorie p
+{
+    font-family: Halcom, sans-serif;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 0.25rem;
+    background: linear-gradient(120deg,#379eff 30%,#1e65ff 80%);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.resulta .vitrine button .news .description .title p
 {
     font-family: Merriweather, MerriFallback, serif;
-    font-weight: bold;
-    font-size: 10px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    padding-top: 0.5rem;
+    font-size: 20px;
+    letter-spacing: 0.03em;
+    line-height: 21px;
+    color: rgb(255, 255, 255);
 }
 
-.resulta .form .vitrine button .date
+.resulta .vitrine button .news .description .date p
 {
-    font-style: italic;
-    font-size: 10px;
-    color: rgb(129, 127, 127);
+    font-family: Halcom, sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    line-height: 14px;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: rgb(201, 201, 201);
+    margin-left: 0.25rem
 }
 
-
-
+.resulta .vitrine .error-sys-555-not-found h1
+{
+    font-family: Halcom, sans-serif;
+    font-weight: 300;
+    font-size: 33px;
+}

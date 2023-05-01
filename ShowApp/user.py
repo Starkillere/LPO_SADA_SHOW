@@ -21,4 +21,7 @@ class User:
     
     def str_role(self) -> str:
         return self.ROLE[self.Role]
+    
+    def key(self, value):
+        return [k for k, v in self.ROLE.items() if v == value][0]
 

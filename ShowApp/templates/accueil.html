@@ -6,7 +6,7 @@
         <p>LPO SADA SHOW est un média social destiné au lycée de Sada.<br>Il propose aux étudiants<br>
             une plateforme pour partager des informations et des contenus divers.</p>
             <button class="Sug"><a href="#">suggestion</a></button>
-            <button class="cont"><a href="#">Voir le contenue</a></button>
+            <button class="cont"><a href="/resutlta/voir-le-contenue">Voir le contenue</a></button>
             {% if connected == False %}
                 <div class="form">
                     <h2>Connection</h2>
@@ -20,9 +20,18 @@
                     </form>
                 </div>
             {% else %}
-                <div class="new">
-
-                </div>
+                <a href="/print/{{new[0]}}"><div class="new">
+                    <h2>Nouveau</h2>
+                    <div class="title">
+                        <h1>{{new[4]}}</h1>
+                    </div>
+                    <div class="image">
+                        <img src="{{new[6]}}" alt="">
+                    </div>
+                    <!--<div class="description">
+                        <p>{{new[5]}}</p>
+                    </div>-->
+                </div></a>
             {% endif %}
     </div>
 </div>

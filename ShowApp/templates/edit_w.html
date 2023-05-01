@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block page %}
+<div class="article_edit_text">
+    <div class="content">
+        <form action="/post/{{type}}" method="post" enctype="multipart/form-data">
+            <div class="image_font">
+                <div class="drop-zone">
+                    <h2 class="drop-zone__prompt">choisir une image</h2>
+                    <input type="file" enctype="multipart/form-data" name="img_font" id="img_font" class="drop-zone__input" accept="image/*" required>
+                </div>
+            </div>
+            <div class="title">
+                <input type="text" name="title" id="title" placeholder="titre du post" required>
+            </div>
+            <div class="description">
+                <textarea name="description" id="description" cols="30" rows="10" placeholder="Description du post" required></textarea>
+            </div>
+            {% if type == "article" %}
+                <div class="acrticle">
+                    <textarea name="article" id="arricle" cols="30" rows="10" class="editable" required></textarea>
+                    <script>var editor = new MediumEditor('.editable');</script>
+                </div>
+            {% elif type == "podcast" %}
+                <div class="podcast">
+                    <input type="file" name="podcast" id="podcast" required>
+                    <label for="podcast">choisir un fichier audio</label>
+                </div>
+            {% elif type == "interview" %}
+                <div class="interview">
+                    <input type="file" name="interview" id="interview" required>
+                    <label for="interview">choisir un fichier vidéo</label>
+                </div>
+            {% endif %}
+            <div class="tags">
+                <input type="text" name="tags" id="tags" placeholder="Tgas" required>
+            </div>
+            <button type="submit" class="btn-sub">Poster</button>
+        </form>
+    </div>
+</div>
+<script src="/static/js/drop_and_drag.js"></script>
+{% endblock %}
