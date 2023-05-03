@@ -7,7 +7,7 @@ from datetime import timedelta
 from datetime import datetime
 import os
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config.from_object("config")
 app.secret_key = app.config["SECRET_KEY"]
 app.permanent_session_lifetime = timedelta(days=5)
@@ -64,7 +64,6 @@ def login():
             if connect:
                 the_user = gestion_data.return_user(Email, database)
                 the_user = user.User(the_user[0],the_user[1],the_user[2],the_user[3],the_user[4], the_user[6], the_user[7])
-                print(the_user.Role)
                 session['CONNECTED'] = True
                 session['ID'] = the_user.ID_user
                 session['PSEUDO'] = the_user.Pseudo
@@ -110,9 +109,10 @@ def post(name):
     if user.User.key(user.User, session["ROLE"]) != 0:
         if request.method == "POST" and session["ROLE"] != 0:
             img_font = secure_filename(request.files["img_font"].filename)
-            img_font_path = os.path.join(img_link, img_font)
+            img_font_path = os.path.join((f"ShowApp/static/{img_link}"), img_font)
             if not os.path.exists(img_font_path):
                 request.files["img_font"].save(img_font_path)
+            img_font_path = f"{img_link}/{img_font}"
 
             title = request.form["title"]
             description = request.form["description"]
@@ -123,17 +123,17 @@ def post(name):
 
             elif name == "podcast":
                 podcast = secure_filename(request.files["podcast"].filename)
-                podcast_path = os.path.join(aud_link, podcast)
+                podcast_path = os.path.join(f"ShowApp/static/{aud_link}", podcast)
                 if not os.path.exists(podcast_path):
                     request.files["podcast"].save(podcast_path)
-                content = podcast_path
+                content = f"{aud_link}/{podcast}"
 
             elif name == "interview":
                 interview = secure_filename(request.files["interview"].filename)
-                interview_path = os.path.join(vid_link, interview)
+                interview_path = os.path.join(f"ShowApp/static/{vid_link}", interview)
                 if not os.path.exists(interview_path):
                     request.files["interview"].save(interview_path)
-                content = interview_path
+                content = f"{vid_link}/{interview}"
 
             tags = request.form["tags"]
             auteur = session['PSEUDO']
@@ -142,14 +142,39 @@ def post(name):
             ID = gestion_data.save_post(database, name, auteur, date, title, description, img_font_path, "none", content, tags, 0, 0, 0)
             theposte = gestion_data.return_poste(int(ID), database)
             return render_template("affiche.html", new=parseur.parseur(theposte[8], theposte[1], theposte[6], theposte[4],theposte[5], theposte[2], theposte[3]))
+        if name == "post-choice":
+            return render_template("posts.html")
         return render_template("edit_w.html", type=name)
     else:
         return redirect(url_for("acceuil"))
 
 @app.route("/profile/<name>", methods=['GET', 'POST'])
 def profile(name):
-    if request.method == "POST":
-        pass
+    if "CONNECTED" in session:
+        if request.method == "POST":
+            if name == "set-ident":
+                gestion_data.update_ident(session["ID"], database, request.form["Email"], request.form["Nom"], request.form["Prenom"], request.form["Pseudo"])
+                session["PSEUDO"] = request.form["Pseudo"]
+            elif name == "set-password":
+                Email = (gestion_data.return_user_by_id(session["ID"], database))[1]
+                ok = register.update_password(request.form["password"], request.form["new-password"], Email, database)
+                if not ok:
+                    flash("Mot de passe incorrect", 'error')
+                    return redirect(request.url)
+        return render_template("profile.html", user=gestion_data.return_user_by_id(session["ID"], database))
+    return redirect(url_for("acceuil"))
+
+@app.route("/delete-user", methods=['GET', 'POST'])
+def delete_user():
+    if "CONNECTED" in session:
+        gestion_data.delleteUser(session["ID"], database)
+        return redirect(url_for("logout"))
+    return redirect(url_for("acceuil"))  
+
+@app.route("/admine-shell", methods=['GET', 'POST'])
+def administrateur():
+    if request.method == "GET":
+        return render_template("administrateur.html", )
 
 @app.route("/logout")
 def logout():

@@ -75,3 +75,14 @@
     margin: 0.25rem 0px;
     font-size: 12px !important;
 }
+
+.affiche .interviews .vid video
+{
+    width: 100%;
+    height: 500px;
+}
+
+.affiche .podcastes .aud audio
+{
+    width: 100%;
+}

@@ -33,10 +33,13 @@ def mots_vide_supprression(text:list[str]) -> list[str]:
 
 
 def Lemmatisation(word:str) -> str:
-    if is_known(word, lang='fr'):
-        word = lemmatize(word, lang='fr')
-    elif is_known(word, lang="en"):
-        word = lemmatize(word, lang="en")
+    try:
+        if is_known(word, lang='fr'):
+            word = lemmatize(word, lang='fr')
+        elif is_known(word, lang="en"):
+            word = lemmatize(word, lang="en")
+    except:
+        pass
     return word
 
 class Search:

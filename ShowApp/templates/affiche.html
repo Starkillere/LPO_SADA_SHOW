@@ -2,7 +2,7 @@
 {% block page %}
 <div class="affiche">
     <div class="image_font">
-        <img src="{{new['img_font']}}" alt="">
+        <img src="{{ url_for('static', filename=new['img_font']) }}" alt="">
     </div>
     <div class="box-text">
         <div class="title">
@@ -21,13 +21,15 @@
         {% elif new["type"] == "podcast" %}
             <div class="podcastes">
                 <div class="aud">
-                    <audio src="{{new['content']}}"></audio>
+                    <audio controls src="{{ url_for( 'static', filename=new['content']) }}"></audio>
                 </div>
             </div>
         {% elif new["type"] == "interview" %}
             <div class="interviews">
-                <div class="vid">
-                    <video src="{{new['content']}}"></video>
+                <div  class="vid">
+                    <video controls>
+                        <source src="{{ url_for( 'static', filename=new['content']) }}">
+                    </video>
                 </div>
             </div>
         {% endif %}

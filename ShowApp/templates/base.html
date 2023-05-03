@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" href="/static/css/resulta.css">
         <link rel="stylesheet" type="text/css" href="/static/css/affiche.css">
         <link rel="stylesheet" type="text/css" href="/static/css/edit_w.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/profile.css">
         <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
         <link rel="icon" href="/static/images/favicon.ico">
@@ -30,9 +31,9 @@
                                 <li><a href="/resutlta/podcast">PODCASTS</a></li>
                                 <li><a href="/resutlta/interview">INTERVIEWS</a></li>
                                 {% if connected == True %}
-                                    <li><a href="#">{{pseudo.upper()}}</a></li>
+                                    <li><a href="/profile/get-hth">{{pseudo.upper()}}</a></li>
                                     {%if role in wrRole%}
-                                        <li><a href="#">PARTAGER</a></li>
+                                        <li><a href="/post/post-choice">PARTAGER</a></li>
                                     {% endif %}
                                 {% endif %}
                             </ul>

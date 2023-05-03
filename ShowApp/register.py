@@ -40,3 +40,15 @@ def login(Password:str, Email:str, database:str):
     
     return connect
 
+def update_password(password:str, new_password:str, Email:str, database:str) -> bool:
+    ok = login(password, Email, database)
+    if ok:
+        hash_password = hashlib.sha1(new_password.encode()).hexdigest()
+        with sqlite3.connect(database) as conn:
+            cursor = conn.cursor()
+            request = "UPDATE Users SET Password = ? WHERE Email = ?"
+            cursor.execute(request, [(hash_password), (Email)])
+
+            conn.commit()
+    return ok
+

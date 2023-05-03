@@ -1,0 +1,88 @@
+.profile
+{
+    margin: 45%;
+}
+
+
+.profile .form
+{
+    position: absolute;
+    width: 1200px;
+    height: 490px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8)50%, rgba(0,0,0,0.8)50%);
+    top:165px;
+    left:70px;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+
+.profile .form .form1, .profile .form .form2
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 5px;
+    
+}
+
+.profile .form .form2
+{
+    margin-top: 20px;
+}
+
+.profile .form .form1 #inpute, .profile .form .form2 #inpute
+{
+    display: block;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    padding: 5%;
+    width:500px;
+    height:50px;
+}
+
+.profile .form .form1 #inpute::placeholder, .profile .form .form2 #inpute::placeholder
+{
+    color: #fff;
+    font-size: 14px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+.profile .form .btn-soum
+{
+    width:100px;
+    height:45px;
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 400;
+    border-radius: 10px;
+    background-color: #003253;
+    border:1px solid #000000;
+    font-size: 15px;
+}
+
+.profile .form .status
+{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.profile .form .status a button
+{
+    width:250px;
+    height:45px;
+    color: #fff;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: 400;
+    border-radius: 10px;
+    background-color: transparent;
+    border:1px solid #ff0000;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.profile .form .status a button:hover
+{
+    background-color: #ff0000;
+}

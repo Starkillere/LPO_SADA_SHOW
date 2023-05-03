@@ -21,6 +21,16 @@ def return_user(Email:str, databse:str) -> tuple:
         
     return user
 
+def return_user_by_id(id:int, database:str) -> tuple:
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request =  "select * FROM Users WHERE ID_user = ?"
+        cursor.execute(request, [(id)])
+
+        user =  cursor.fetchone()
+        
+    return user
+
 def select_by_list_id(ids:list, database:str) -> tuple:
     if len(ids) > 0:
         with sqlite3.connect(database) as conn:
@@ -79,3 +89,20 @@ def save_post(database:str, type:str, auteur:str, date:str, title:str, descripti
         poste = cursor.fetchone()
 
     return poste[0]
+
+def update_ident(id:int, database:str, Email:str, Nom:str, Prenom:str, Pseudo:str) -> None:
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request = "UPDATE Users SET Email = ?, Nom = ?, Prenom = ?, Pseudo = ? WHERE ID_user = ?"
+        cursor.execute(request, [(Email), (Nom), (Prenom), (Pseudo)])
+
+        conn.commit()
+
+def delleteUser(id:int, database:str):
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request = "DELETE FROM Users WHERE ID_user = ?"
+        cursor.execute(request, [(id)])
+
+        conn.commit()
+        
