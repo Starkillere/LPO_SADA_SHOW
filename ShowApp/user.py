@@ -1,5 +1,9 @@
 # -*- coding:utf-8 -*-
 
+import hashlib
+import sqlite3
+from datetime import datetime
+
 class User:
 
     ROLE = {4:"ADMINISTRATEUR", 2:"CONTRIBUTEUR", 0:"UTILISATEUR"}

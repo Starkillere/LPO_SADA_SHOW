@@ -1,53 +1,62 @@
 {% extends 'base.html' %}
 {% block page %}
 <div class="accueil">
-    <div class="content">
-        <h1>Bienvenue sur<br><span class="auto-typing">LPO SADA SHOW !</span></h1>
-        <p>LPO SADA SHOW est un média social destiné au lycée de Sada.<br>Il propose aux étudiants<br>
-            une plateforme pour partager des informations et des contenus divers.</p>
-            <button class="Sug"><a href="#">suggestion</a></button>
-            <button class="cont"><a href="/resutlta/voir-le-contenue">Voir le contenue</a></button>
-            {% if connected == False %}
-                <div class="form">
-                    <h2>Connection</h2>
-                    <form action="/login" method="post">
-                        <input type="email" name="email" class="email" placeholder="Email">
-                        <input type="password" name="password" class="password" placeholder="Mot de passse">
-                        <br><a href="#">mot de passe oublié</a><br>
-                        <button class="btn-log" type="submit">Connection</button>
-                        <p class="link">Vous n'avez pas de compte<br>
-                        <a href="/s-inscrire">Inscrivez vous ici</a></p>
-                    </form>
-                </div>
-            {% else %}
-                <a href="/print/{{new[0]}}"><div class="new">
-                    <h2>Nouveau</h2>
+    <div class="post">
+        {% if connected == True and role in wrRole %}
+            <form action="{{url_for('poster', name='/0')}}" method="post" enctype="multipart/form-data">
+                <div class="write-post-container">
+                    <div class="type">
+                        <select id="pet-select" name="type" required>
+                            <option value="article">article</option>
+                            <option value="interview">interview</option>
+                            <option value="podcast">podcast</option>
+                        </select>
+                    </div>
                     <div class="title">
-                        <h1>{{new[4]}}</h1>
+                        <input type="text" name="title" id="title" placeholder="Titre du post">
                     </div>
-                    <div class="image">
-                        
-                        <img src="{{url_for( 'static', filename=new[6])}}" alt="">
+                    <div class="post-input-container">
+                        <textarea name="text" id="text"  rows="3" class="editable" required></textarea>
+                        <script>var editor = new MediumEditor('.editable');</script>
+                        <div class="add-post-links">
+                            <label for="image"><i class="fa-solid fa-image fa-2xl" style="color: #65a8e6;"></i> image</label>
+                            <input type="file" name="image" id="image" accept="image/*" enctype="multipart/form-data">
+                            <label for="podcast"><i class="fa-solid fa-podcast fa-2xl" style="color: #65a8e6;"></i> vocal</label>
+                            <input type="file" name="podcast" id="podcast" accept="audio/*" enctype="multipart/form-data">
+                            <label for="interview"><i class="fa-solid fa-video fa-2xl" style="color: #65a8e6;"></i> video</label>
+                            <input type="file" name="interview" id="interview" accept="video/*" enctype="multipart/form-data">
+                        </div>
                     </div>
-                    <!--<div class="description">
-                        <p>{{new[5]}}</p>
-                    </div>-->
-                </div></a>
-            {% endif %}
+                    <div class="tags">
+                        <input type="text" name="tags" id="tags" placeholder="Tags séparer par une virgule (,)">
+                    </div>
+                    <button type="submit">poster</button>
+                </div>
+            </form>
+        {% endif %}
+        <div class="post-container">
+            {% for post in posts %}
+                <div class="post">
+                    <div class="decription">
+                        <h1>{{post['title']}}</h1><br>
+                        <p><small>{{post['type']}}</small><br>
+                        <span>{{post['auteur']}}</span>
+                        <span>{{post['date']}}</span> </p>
+                    </div>
+                    <p class="post-text">{{post['text']|safe}}</p>
+                    {% if post['type'] == "article" or post['type'] == "podcast" and 'image_font' in post %}
+                        <img src="{{url_for('static', filename=post['image_font'])}}" alt=" image de l'article">
+                    {%elif post['type'] == "interview"%}
+                        <video controls>
+                            <source src="{{url_for('static', filename=post['vid'])}}">
+                        </video>
+                    {% endif %}
+                    {% if post['type'] == "podcast"%}
+                        <audio controls src="{{ url_for('static', filename=post['aud'])}}"></audio>
+                    {% endif %}
+                </div>
+            {% endfor%}
+        </div>
     </div>
 </div>
-<script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
-<script>
-    let typed = new Typed('.auto-typing', {
-        strings: ['LPO SADA SHOW !'],
-        typeSpeed: 100,
-        backSpeed: 100,
-        loop: true,
-        fadeOut: true,
-        fadeOutClass: 'type-fade-out',
-        fadeOutDelay: 500,
-        shuffle: true
-    }
-    )
-</script>
 {% endblock %}

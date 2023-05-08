@@ -4,72 +4,123 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="/static/css/base.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/accueil.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/resulta.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/affiche.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/edit_w.css">
-        <link rel="stylesheet" type="text/css" href="/static/css/profile.css">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/base.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/profile.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/accueil.css')}}">
+        <script src="https://kit.fontawesome.com/be6abcb2b9.js" crossorigin="anonymous"></script>
         <script src="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css" type="text/css" media="screen" charset="utf-8">
-        <link rel="icon" href="/static/images/favicon.ico">
+        <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}">
         <title>LPO SADA SHOW</title>
     </head>
     <body>
-        <div class="main">
-            <header>
-                <nav>
-                    <div class="navbar">
-                        <div class="logo">
-                            <img src="/static/images/logo.png" alt="log LPO SADA SHOW">
-                            <!-- <h2 class="text-logo">LPO SADA SHOW</h2> -->
-                        </div>
-                        <div class="menu">
-                            <ul  class="nav-links">
-                                <li><a href="/">HOME</a></li>
-                                <li><a href="/resutlta/article">ARTICLES</a></li>
-                                <li><a href="/resutlta/podcast">PODCASTS</a></li>
-                                <li><a href="/resutlta/interview">INTERVIEWS</a></li>
-                                {% if connected == True %}
-                                    <li><a href="/profile/get-hth">{{pseudo.upper()}}</a></li>
-                                    {%if role in wrRole%}
-                                        <li><a href="/post/post-choice">PARTAGER</a></li>
-                                    {% endif %}
-                                {% endif %}
-                            </ul>
-                            <img src="/static/images/hambuger-button.png" alt="" class="humber">
-                        </div>
+        <nav>
+            <div class="nav-left">
+                <a href="{{url_for('acceuil')}}"><img src="{{url_for('static', filename='images/logo.png')}}" class="logo" alt="logo LPO SADA SHOW"><!--<h1 class="logo">LPO SADA SHOW</h1>--></a>
+                <ul>
+                    <li><a href="{{url_for('rch_or_filter_by', content='filter-by-article')}}"><i class="fa-solid fa-newspaper fa-2xl" style="color: #ffffff;"></i></a></li>
+                    <li><a href="{{url_for('rch_or_filter_by', content='filter-by-podcast')}}"><i class="fa-solid fa-podcast fa-2xl" style="color: #ffffff;"></i></a></li>
+                    <li><a href="{{url_for('rch_or_filter_by', content='filter-by-interview')}}"><i class="fa-solid fa-clipboard-question fa-2xl" style="color: #ffffff;"></i></a></li>
+                    {% if role == wrRole[0] %}
+                        <li><a href="{{url_for('administrateur')}}"><i class="fa-solid fa-bug fa-2xl" style="color: #ffffff;"></i></a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="nav-rigth">
+                    <form action="{{url_for('rch_or_filter_by', content='rch')}}" method="post">
                         <div class="search">
-                            <form action="/recherche" method="post">
-                                <input type="search" name="search" id="search" class="serch-bar" placeholder="Chercher...">
-                                <button class="btn-search" type="submit">Chercher</button>
-                            </form>
+                            <button type="submit"><i class="fa-solid fa-magnifying-glass fa-xl" id="normale-active"></i></button>
+                            <button type="button" onclick="zeubWasClicked()" id="zeub"><i class="fa-solid fa-magnifying-glass fa-xl" id="mobile-active" onclick="searchMobile()"></i></button>
+                            <input type="search" name="search" id="search" class="search-bar" placeholder="Chercher...">
+                            <input type="search" name="search" id="search-bar-mobile" class="search-bar-mobile" placeholder="Chercher...">
+                        </div>
+                    </form>
+                {% if connected == True %}
+                    <div class="nav-user-icon" onclick="settingsMenuToggle()">
+                        <i class="fa-solid fa-user fa-2xl" style="color: #ffffff;"></i>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!------------------- parametre du menu ------------------>
+            {% if connected == True %}
+                <div class="settings-menu">
+                    <div class="settings-menu-inner">
+                        <div class="user-profile">
+                            <i class="fa-solid fa-user fa-2xl" style="color: #000000;"></i>
+                            <div>
+                                <p>{{pseudo}}</p>
+                                <a href="{{url_for('profile', name='profile-settings-menu-inner')}}">Voir mon profile</a>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="user-profile">
+                            <i class="fa-solid fa-inbox fa-2xl" style="color: #000000;"></i>
+                            <div>
+                                <p>Suggestion</p>
+                                <a href="">Donner mon avis</a>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="settings-links">
+                            <i class="fa-solid fa-right-from-bracket fa-2xl" style="color: #000000;"></i>
+                            <a href="{{url_for('logout')}}">Déconnéxion</a>
                         </div>
                     </div>
-                </nav>
-            </header>
-            <div class="page">
-                {% block page %}{% endblock %}
+                </div>
+            {% endif %}
+        </nav>
+
+        <div class="container">
+            <!------------------- left-sidebar ------------------>
+            <div class="left-sidebar">
+                <div class="imp-link">
+                    <a href="#"><img src="{{url_for('static', filename='images/Instagram_icon.webp')}}" alt="Instagram logo"> <span class="auto-typing">Instagram</span></a>
+                </div>
+                {% if connected == False %}
+                    <div class="form">
+                        <h2>Connection</h2>
+                        <form action="{{url_for('login')}}" method="post">
+                            <input type="email" name="email" class="email" placeholder="Email" required>
+                            <input type="password" name="password" class="password" placeholder="Mot de passse" required>
+                            <br><a href="{{url_for('mot_de_passe_oublier')}}">mot de passe oublié</a><br>
+                            <button class="btn-log" type="submit">Connection</button>
+                            <p class="link">Vous n'avez pas de compte<br>
+                            <a href="{{url_for('s_inscrire')}}">Inscrivez vous ici</a></p>
+                        </form>
+                    </div>
+                {% endif %}
             </div>
-            <div class="footer ">
-                <footer>
-                  <div class="colum">
-                    <div class="line"><a href="https://github.com/Starkillere/LPO_SADA_SHOW" target="_blank">Documentation</a></div>
-                    <div class="line"><a href="https://github.com/Starkillere/LPO_SADA_SHOW" target="_blank">Dépôt Github</div>
-                  </div>
-                  <div class="colum">
-                    <div class="line"><a href="https://github.com/Starkillere/">© <script>document.write(new Date().getFullYear());</script> LPO SADA SHOW par Ayouba Anrezki</h2></a></div>
-                  </div>
-                </footer>
+            <!------------------- main-content ------------------>
+            <div class="main-content">
+                {% block page %}
+
+                {% endblock %}
+            </div>
+            <!------------------- right-sidebar ------------------>
+            <div class="right-sidebar">
+                
             </div>
         </div>
+        <div class="footer">
+            <p><a href="https://github.com/Starkillere/">© <script>document.write(new Date().getFullYear());</script> LPO SADA SHOW par Ayouba Anrezki</a></p>
+        </div>
+    <script src="{{url_for('static', filename='js/hid_prompt.js')}}"></script>
+    <script src="{{url_for('static', filename='js/mobile-show-search-bar.js')}}"></script>
     </body>
+    <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
     <script>
-        const menuHamburger = document.querySelector(".humber")
-        const navLinks = document.querySelector(".nav-links")
-        
-        menuHamburger.addEventListener('click',()=>{
-        navLinks.classList.toggle('mobile-menu')
-        })
+        let typed = new Typed('.auto-typing', {
+            strings: ['LPO SADA SHOW -> INSTA'],
+            typeSpeed: 100,
+            backSpeed: 100,
+            loop: true,
+            fadeOut: true,
+            fadeOutClass: 'type-fade-out',
+            fadeOutDelay: 500,
+            shuffle: true
+        }
+        )
     </script>
 </html>

@@ -1,192 +1,176 @@
-.accueil .content
+.accueil .write-post-container
 {
-    width: 1200px;
-    height: auto;
-    margin: auto;
-    color: #fff;
-    position: relative;
-}
-
-.accueil .content p
-{
-    padding-left: 20px;
-    padding-bottom: 25px;
-    font-family: Arial;
-    letter-spacing: 3px;
-    line-height: 30px;
-}
-
-.accueil .content h1
-{
-    font-family: 'Times New Roman';
-    font-size: 50px;
-    padding-left: 20px;
-    margin-top: 9%;
-    letter-spacing: 1.5px;
-}
-
-.accueil .content .Sug, .cont
-{
-    width: 160px;
-    height: 40px;
-    background: transparent;
-    margin-bottom: 10px;
-    margin-left: 20px;
-    font-size: 18px;
-    border-radius: 30px;
-    border: 1px solid #058eec;
-    cursor: pointer;
-    transition: 0.5s ease-in-out;
-}
-
-.accueil .content .Sug:hover
-{
-    background: #058eec;
-}
-
-.accueil .content .cont:hover
-{
+    width: 100%;
     background: #fff;
+    border-radius: 6px;
+    padding: 20px;
+    columns: #626262;
+}
+
+.accueil .write-post-container .type
+{
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    color: #626262;
+}
+
+.accueil .write-post-container .type select
+{
     border: none;
-    color: black;
+    border-bottom: 1px solid #9a9a9a;
 }
 
-.accueil .content .Sug a, .cont a
+
+.accueil .write-post-container .post-input-container
 {
-    color: #fff;
+    padding-left:55px;
+    padding-top:20px;
 }
 
-.accueil .content .cont a:hover
+.accueil .write-post-container .post-input-container .editable
 {
-    color: black;
+    width: 100%;
+    max-width: 500px;
+    border:0;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    background:transparent;
+    resize: none;
 }
 
-.accueil .content .cont
+
+.accueil .write-post-container .post-input-container .add-post-links input
 {
-    background: #058eec;
+    display:none;
+    visibility: none;
 }
 
-.accueil .content .auto-typing
+.accueil .write-post-container .post-input-container .add-post-links label
 {
-    color: #058eec;
-    font-size: 60px;
+    cursor: pointer;
 }
 
-.accueil .content .form, .new
+.accueil .write-post-container .post-input-container .add-post-links
 {
-    width: 290px;
-    height: 420px;
-    background: linear-gradient(to top, rgba(0,0,0,0.8)50%, rgba(0,0,0,0.8)50%);
-    position: absolute;
-    top:-20px;
-    left:870px;
-    border-radius: 10px;
-    padding: 25px;
-}
-
-.accueil .content .form h2
-{
-    width: 220px;
-    font-family: sans-serif;
+    display: flex;
     text-align: center;
-    color: #058eec;
-    font-size: 22px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin: 2px;
-    padding: 8px;
+    align-items: center;
+    color: #626262;
+    margin-right: 30px;
+    font-size: 13px;
 }
 
-.accueil .content .form input
+.accueil .write-post-container .post-input-container .add-post-links label i
 {
-    width: 240px;
-    height: 35px;
-    background: transparent;
-    border-bottom: 1px solid #058eec;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    color:#fff;
-    font-size: 15px;
-    letter-spacing: 1px;
+    width: 20px;
+    margin-right: 10px;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.accueil .write-post-container .tags, .accueil .write-post-container .title
+{
+    padding-left:55px;
+    padding-top:40px;
+}
+
+.accueil .write-post-container .tags input, .accueil .write-post-container .title input
+{
+    width: 100%;
+    padding-bottom: 30px;
+    border:0;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    background:transparent;
+}
+
+.accueil .write-post-container button
+{
     margin-top: 30px;
-    font-family: sans-serif;
-}
-
-.accueil .content .form input:focus
-{
-    outline: none;
-}
-
-::placeholder
-{
-    color: #fff;
-    font-family: 'Trebuchet MS';
-}
-
-.accueil .content .btn-log
-{
-    width: 100px;
+    margin-left:55px;
+    width: 70px;
     height: 40px;
     background: #058eec;
     border: 2px solid #058eec;
-    margin-top: 13px;
     color: #fff;
     font-size: 15px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     cursor: pointer;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
-.accueil .content .btn-log:hover
+.accueil .post-container .post
 {
+    width: 100%;
+    max-width: 500px;
+    word-wrap:break-word;
     background: #fff;
-    border: none;
+    border-radius: 6px;
+    padding: 20px;
+    color: #626262;
+    margin: 20px 0;
+}
+
+.accueil .post-container .post .h1
+{
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    letter-spacing: 0.2rem;
+}
+
+
+.accueil .post-container .post .decription p span
+{
+    font-size: 13px;
+    color:#9a9a9a;
+}
+
+.accueil .post-container .post .post-text
+{
+    color: #9a9a9a;
+    margin:15px 0;
+    font-size: 15px;
+}
+
+.accueil .post-container .post .post-text b
+{
+    font-weight: bold;
     color: black;
 }
 
-.accueil .content .form .link
+.accueil .post-container .post .post-text i
 {
-    font-family: Arial;
-    font-size: 13px;
-    padding-top: 20px;
-    text-align: center;
+    font-style: italic;
+    color: #adadad;
 }
 
-.accueil .content .form  a
+.accueil .post-container .post .post-text a
 {
-    color: #058eec;
-    text-align: center;
-    padding-bottom: 10px;
+    color: #1876f2;
+    font-weight: 900;
 }
 
-.accueil .content .new h2
+.accueil .post-container .post img, .accueil  .post-container .post video, .accueil .post-container .post audio
 {
-    width: 220px;
-    font-family: sans-serif;
-    text-align: center;
-    color: #058eec;
-    font-size: 22px;
-    background-color: #fff;
-    border-radius: 10px;
-    margin: 2px;
-    padding: 8px;
+    width: 100%;
+    max-height: 450px;
+    margin-top: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
 }
 
-.accueil .content .new .title h1
+
+
+@media screen and (max-width: 900px) 
 {
-    font-family: 'Times New Roman';
-    font-size: 25px;
-    padding-left: 20px;
-    color: rgb(255, 255, 255);
-    letter-spacing: 1.5px;
+    .accueil .write-post-container .post-input-container .add-post-links label
+    {
+        color:#fff;
+    }
 }
 
-.accueil .content .new .image img
-{
-    width: 240px;
-    height: 150px;
-    margin: 2px;
-    padding: 8px;
-}

@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
-import math
+
 from stop_words import get_stop_words
 from simplemma import lemmatize, is_known
 import sqlite3
@@ -17,7 +17,7 @@ def Import_format_data(database:str) -> dict:
     dict_Posts = {}
     keys = ["TITLE", "TAGS"]
     for i in range(len(Posts)):
-        values = [Posts[i][j] for j in [4,9]]
+        values = [Posts[i][j] for j in [4,8]]
         dict_Posts[Posts[i][0]] = {k:v for (k,v) in zip(keys, values)}
         
     return dict_Posts

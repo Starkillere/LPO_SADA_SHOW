@@ -2,6 +2,18 @@
 
 import sqlite3
 
+def initialisation(database, Pseudo:str):
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request =  "select * FROM Users WHERE Pseudo = ?"
+        cursor.execute(request, [(Pseudo)])
+
+        admin = cursor.fetchone()
+
+        if admin == None:
+            return False
+    return True
+
 def return_the_new(database:str):
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
@@ -35,7 +47,7 @@ def select_by_list_id(ids:list, database:str) -> tuple:
     if len(ids) > 0:
         with sqlite3.connect(database) as conn:
             cursor = conn.cursor()
-            request =  f"select * from Posts where ID_Post in ({','.join(['?']*len(ids))}) ORDER BY pertinence"
+            request =  f"select * from Posts where ID_Post in ({','.join(['?']*len(ids))}) ORDER BY pertinence, ID_Post DESC"
             print(ids)
             cursor.execute(request, ids)
 
@@ -58,9 +70,7 @@ def return_postes_categorie_all(categorie:str, databse:str) -> tuple:
     with sqlite3.connect(databse) as conn:
         cursor = conn.cursor()
         request = "select * from Posts WHERE type = ? ORDER BY ID_Post DESC"
-        print(categorie)
         cursor.execute(request, [(categorie)])
-
         postes = cursor.fetchall()
     
     return postes
@@ -75,21 +85,14 @@ def return_poste(ID:int, databse:str) -> tuple:
 
     return poste
 
-def save_post(database:str, type:str, auteur:str, date:str, title:str, description:str, font_img:str, other_img:str, content:str, tags:str, vue:int, like:int, pertinence:int):
+def save_post(database:str, data:dict):
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
-        request = "insert into Posts (type, auteur, date, title, description, font_img, other_img, content, tags, vue, like, pertinence) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-        cursor.execute(request, [(type), (auteur), (date), (title), (description), (font_img), (other_img), (content), (tags), (vue), (like), (pertinence)])
+        request = f"insert into Posts ({''.join([ key+',' for key in data.keys()])[:-1]}) values ({','.join(['?']*len(data))})"
+        cursor.execute(request, [(dt) for dt in list(data.values())])
 
         conn.commit()
-
-        request = "select ID_Post from Posts WHERE title = ?"
-        cursor.execute(request, [(title)])
-
-        poste = cursor.fetchone()
-
-    return poste[0]
-
+        
 def update_ident(id:int, database:str, Email:str, Nom:str, Prenom:str, Pseudo:str) -> None:
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()

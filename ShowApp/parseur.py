@@ -1,6 +1,6 @@
 #-*- coding:utf-8 -*-
 
-def parseur(content:str, type:str, img_font:str, title:str, description:str, auteur:str, date:str) -> dict:
-    parss = {'img_font':img_font, 'title':title, "description":description, "content":content, "type":type, "auteur":auteur, "date":date}
+def parseur(title:str, type:str, auteur:str, date:str, text:str, image_font:str, aud:str, vid:str) -> dict:
+    parss = {"title":title, "type":type, "auteur":auteur, "date":date, "text":text, "image_font":image_font, "aud":aud, "vid":vid}
     
     return parss

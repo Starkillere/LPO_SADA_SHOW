@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr-fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/static/images/favicon.ico">
+        <title>LPO SADA SHOW</title>
+    </head>
+    <body>
+        
+        <style>
+            *
+            {
+                margin: 0;
+                padding: 0;
+                text-decoration: none;
+                list-style: none;
+            }
+
+            .main
+            {
+                width: 100%;
+                background: linear-gradient(rgba(0, 0, 0, 0.5),rgb(0, 0, 0, 0.3)), url("/static/images/background_LPO_SADA.jpg");
+                background-position: center;
+                background-size: cover;
+                height: 100vh;
+            }
+
+            .form
+            {
+                width: 250px;
+                height: 550px;
+                background: linear-gradient(to top, rgba(0,0,0,0.8)50%, rgba(0,0,0,0.8)50%);
+                position: absolute;
+                top:50px;
+                left:550px;
+                border-radius: 10px;
+                padding: 25px;
+            }
+            .form h2
+            {
+                width: 220px;
+                font-family: sans-serif;
+                text-align: center;
+                color: #058eec;
+                font-size: 22px;
+                background-color: #fff;
+                border-radius: 10px;
+                margin: 2px;
+                padding: 8px;
+            }
+
+            .form input
+            {
+                width: 240px;
+                height: 35px;
+                background: transparent;
+                border-bottom: 1px solid #058eec;
+                border-top: none;
+                border-left: none;
+                border-right: none;
+                color:#fff;
+                font-size: 15px;
+                letter-spacing: 1px;
+                margin-top: 30px;
+                font-family: sans-serif;
+            }
+
+            .form input:focus
+            {
+                outline: none;
+            }
+
+            ::placeholder
+            {
+                color: #fff;
+                font-family: 'Trebuchet MS';
+            }
+
+            .btn-log
+            {
+                width: 100px;
+                height: 40px;
+                background: #058eec;
+                border: 2px solid #058eec;
+                margin-top: 13px;
+                color: #fff;
+                font-size: 15px;
+                border-bottom-right-radius: 5px;
+                border-bottom-left-radius: 5px;
+                cursor: pointer;
+                border-radius: 30px;
+            }
+
+            .btn-log:hover
+            {
+                background: #fff;
+                border: none;
+                color: black;
+            }
+        </style>
+        <div class="main">
+            <div class="form">
+                <h2>Inscription</h2>
+                <form action="{{url_for('administrateur')}}" method="post">
+                    <input type="email" name="email" class="email" placeholder="Email">
+                    <input type="text" name="name" class="name" placeholder="Nom">
+                    <input type="text" name="surname" class="surname" placeholder="Prénom">
+                    <input type="text" name="role" class="role" placeholder="role">
+                    <input type="text" name="in_name" class="in_name" placeholder="Pseudo">
+                    <input type="password" name="password" class="password" placeholder="Mot de passse">
+                    <input type="password" name="c-password" class="c-password" placeholder="Confirmer votre mot de passe">
+                    <button class="btn-log" type="submit">Soumettre</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

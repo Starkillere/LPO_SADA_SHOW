@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block page %}
 <div class="profile">
-    <div class="form">
-        <form action="/profile/set-ident" method="post">
+    <div class="profile-form">
+        <form action="{{url_for('profile', name='set-ident')}}" method="post">
             <div class="form1">
                 <input type="text" id="inpute" value="{{user[1]}}" class="Email" placeholder="Email">
                 <input type="text" id="inpute" value="{{user[2]}}" class="Nom" placeholder="Nom">
@@ -12,7 +12,7 @@
             <br><input type="submit" value="soumettre" class="btn-soum"><br><br>
         </form>
         
-        <form action="/profile/set-password" method="post">
+        <form action="{{url_for('profile', name='set-password')}}" method="post">
             <div class="form2">
                 <input type="password" id="inpute" class="new-password" placeholder="Nouveau mot de passe">
                 <input type="password" id="inpute" class="password" placeholder="Mot de passe">
@@ -20,8 +20,7 @@
             <br><input type="submit" value="soumettre" class="btn-soum"><br>
         </form>
         <div class="status">
-            <a href="/logout"><button type="button">Déconnexion</button></a>
-            <a href="/delete-user"><button type="button">Supprimer mon compte</button></a>
+            <a href="{{url_for('delete_user')}}"><button type="button">Supprimer mon compte</button></a>
         </div>
     </div> 
 </div>
