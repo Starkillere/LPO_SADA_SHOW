@@ -3,7 +3,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
-from . import user, gestion_data, register, poste, search, parseur
+from . import user, gestion_data, register, poste, search, parseur, text_email
 import secrets
 from datetime import timedelta
 from datetime import datetime
@@ -56,7 +56,7 @@ def s_inscrire():
                 session['PSEUDO'] = the_user.Pseudo
                 session['ROLE'] = the_user.str_role()
                 test_email = Message("Verification LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                test_email.body = "Trouve moi !"
+                test_email.body = text_email.welcome_text.replace("<name>", session["PSEUDO"])
                 try:
                     email.send(test_email)
                 except:
@@ -164,7 +164,7 @@ def mot_de_passe_oublier():
     if request.method  == "POST":
         Email = request.form["email"]
         test_email = Message("LPO SADA SHOW : Mot de passe oublier !", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-        test_email.body = "Nouveau mot de passe : "+secrets.token_urlsafe(20)
+        test_email.body = text_email.change_password_text.replace("<name>", session["PSEUDO"]).replace("<password>", secrets.token_urlsafe(20))
         try:
             email.send(test_email)
         except:
