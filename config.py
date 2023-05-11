@@ -36,6 +36,3 @@ if not os.path.exists(os.path.join(appdir, 'DIR_VID')):
 
 if not os.path.exists(os.path.join(appdir, 'DIR_IMG')):
     os.makedirs(os.path.join(appdir, 'DIR_IMG'))
-
-
-

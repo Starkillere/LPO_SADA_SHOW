@@ -30,9 +30,10 @@
                     <form action="{{url_for('rch_or_filter_by', content='rch')}}" method="post">
                         <div class="search">
                             <button type="submit"><i class="fa-solid fa-magnifying-glass fa-xl" id="normale-active"></i></button>
-                            <button type="button" onclick="zeubWasClicked()" id="zeub"><i class="fa-solid fa-magnifying-glass fa-xl" id="mobile-active" onclick="searchMobile()"></i></button>
+                            <button type="submit" class="send-research-button"><i class="fa-solid fa-magnifying-glass fa-xl" id="mobile-active"></i></button>
+                            <button type="button" class="send-research-button-active" onclick="searchMobile()"><i class="fa-solid fa-magnifying-glass fa-xl" id="mobile-active"></i></button>
                             <input type="search" name="search" id="search" class="search-bar" placeholder="Chercher...">
-                            <input type="search" name="search" id="search-bar-mobile" class="search-bar-mobile" placeholder="Chercher...">
+                            <input type="search" name="search" id="search1" class="search-bar-mobile" placeholder="Chercher...">
                         </div>
                     </form>
                 {% if connected == True %}
@@ -81,6 +82,17 @@
                 {% if connected == False %}
                     <div class="form">
                         <h2>Connection</h2>
+                        <div class="alert" role="alert">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                              {% if messages %}
+                                <ul class=flashes>
+                                {% for category, message in messages %}
+                                  <li class="{{ category }}">{{ message }}</li>
+                                {% endfor %}
+                                </ul>
+                              {% endif %}
+                            {% endwith %}
+                        </div>
                         <form action="{{url_for('login')}}" method="post">
                             <input type="email" name="email" class="email" placeholder="Email" required>
                             <input type="password" name="password" class="password" placeholder="Mot de passse" required>
@@ -119,7 +131,7 @@
             fadeOut: true,
             fadeOutClass: 'type-fade-out',
             fadeOutDelay: 500,
-            shuffle: true
+            shuffle: false
         }
         )
     </script>

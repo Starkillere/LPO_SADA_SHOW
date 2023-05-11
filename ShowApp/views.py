@@ -56,7 +56,7 @@ def s_inscrire():
                 session['PSEUDO'] = the_user.Pseudo
                 session['ROLE'] = the_user.str_role()
                 test_email = Message("Verification LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                test_email.body = text_email.welcome_text.replace("<name>", session["PSEUDO"])
+                test_email.html = text_email.welcome_text.replace("<name>", session["PSEUDO"])
                 try:
                     email.send(test_email)
                 except:
@@ -164,7 +164,7 @@ def mot_de_passe_oublier():
     if request.method  == "POST":
         Email = request.form["email"]
         test_email = Message("LPO SADA SHOW : Mot de passe oublier !", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-        test_email.body = text_email.change_password_text.replace("<name>", session["PSEUDO"]).replace("<password>", secrets.token_urlsafe(20))
+        test_email.html = text_email.change_password_text.replace("<name>", session["PSEUDO"]).replace("<password>", secrets.token_urlsafe(20))
         try:
             email.send(test_email)
         except:
@@ -209,16 +209,16 @@ def administrateur():
             if creat:
                 test_email = Message("Administration LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[app.config["ADMINISTRATEUR_EMAIL"]])
                 if int(role) == 4:
-                    test_email.body = f"Un compte administrateur viens d'être crée !\nNom = {nom}\nPrenom = {prenom}\nPseudo = {pseudo}\nEmail = {Email}"
+                    test_email.html = f"Un compte administrateur viens d'être crée !<br>Nom = {nom}<br>Prenom = {prenom}<br>Pseudo = {pseudo}<br>Email = {Email}"
                 elif int(role) == 2:
-                    test_email.body = f"Un compte journaliste viens d'être crée !\nNom = {nom}\nPrenom = {prenom}\nPseudo = {pseudo}\nEmail = {Email}"
+                    test_email.html = f"Un compte journaliste viens d'être crée !<br>Nom = {nom}<br>Prenom = {prenom}<br>Pseudo = {pseudo}<br>Email = {Email}"
                 try:
                     email.send(test_email)
                 except:
                     pass
 
                 test_email = Message("COMPTE LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                test_email.body = f"Un compte {user.User.ROLE[int(role)]} viens d'être crée pour vous !\nNom = {nom}\nPrenom = {prenom}\n<b>Pseudo = {pseudo}</b>\n<b>Email = {Email}</b>\n<b>Mot de passe = {password}</b>"
+                test_email.html = f"Un compte {user.User.ROLE[int(role)]} viens d'être crée pour vous !<br>Nom : ......... {nom}<br>Prenom : ....... {prenom}<br>Pseudo : ....... {pseudo}</b>Email : ....... {Email}</b>Mot de passe :....... {password}</b>"
                 try:
                     email.send(test_email)
                 except:
@@ -239,3 +239,17 @@ def logout():
         session.pop("PSEUDO", None)
         session.pop("ROLE", None)
     return redirect(url_for("acceuil"))
+
+@app.errorhandler(404)
+def page_not_found(error):
+    rror = [{"title":"404 : Tu t'es perdu dans les couloirs !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Il était une fois une créature mystérieuse qui hantait les couloirs sombres et délabrés du lycée de SADA. On disait qu'elle avait le pouvoir d'enlever les élèves qui s'aventuraient trop loin dans les méandres des couloirs. Les rumeurs disaient que cette créature était en réalité un monstre démoniaque qui se nourrissait de la peur et des cris des élèves. Les plus courageux disaient que le monstre prenait la forme d'un énorme loup noir, mais personne ne sait vraiment ce qu'il est vraiment. Les élèves étaient terrorisés à l'idée de le rencontrer et ils s'enfuyaient à toutes jambes dès qu'ils entendaient un bruit suspect. Beaucoup d'entre eux ont été enlevés par ce monstre, mais jamais personne ne les a retrouvés. Il règne encore aujourd'hui une atmosphère de mystère et de peur au sein du lycée de SADA.""", "image_font":"images/image404.png", "aud":None, "vid":None}]
+    if "CONNECTED" in session:
+        return render_template("accueil.html", connected=session['CONNECTED'], pseudo=session['PSEUDO'], role=session["ROLE"], wrRole=[user.User.ROLE[4], user.User.ROLE[2]], posts=rror)
+    return render_template("accueil.html", connected=False, posts=rror, wrRole=[user.User.ROLE[4], user.User.ROLE[2]])
+
+@app.errorhandler(500)
+def page_on(error):
+    rror = [{"title":"500 : ça ne marche pas  !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Notre développeur est génial voilà une photo pour vous le prouver (enfin c'est surtout pour nous nous le prouver !)""", "image_font":"images/image505.png", "aud":None, "vid":None}]
+    if "CONNECTED" in session:
+        return render_template("accueil.html", connected=session['CONNECTED'], pseudo=session['PSEUDO'], role=session["ROLE"], wrRole=[user.User.ROLE[4], user.User.ROLE[2]], posts=rror)
+    return render_template("accueil.html", connected=False, posts=rror, wrRole=[user.User.ROLE[4], user.User.ROLE[2]])

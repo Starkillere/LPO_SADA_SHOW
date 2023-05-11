@@ -53,6 +53,7 @@
     background-color: #003253;
     border:1px solid #000000;
     font-size: 15px;
+    cursor: pointer;
 }
 
 .profile .profile-form .status
@@ -91,5 +92,13 @@
     {
         width: 150px;
         padding-right: 0;
+    }
+}
+
+@media screen and (max-width: 350px)
+{
+    .profile .profile-form .form1 #inpute, .profile .profile-form .form2 #inpute
+    {
+        width: 100px;
     }
 }
