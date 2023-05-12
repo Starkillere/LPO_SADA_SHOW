@@ -249,7 +249,7 @@ def page_not_found(error):
 
 @app.errorhandler(500)
 def page_on(error):
-    rror = [{"title":"500 : ça ne marche pas  !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Notre développeur est génial voilà une photo pour vous le prouver (enfin c'est surtout pour nous nous le prouver !)""", "image_font":"images/image505.png", "aud":None, "vid":None}]
+    rror = [{"title":"500 : ça ne marche pas  !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Notre développeur est génial voilà une photo pour vous le prouver (enfin c'est surtout pour nous nous le prouver !)""", "image_font":"images/image505.jpg", "aud":None, "vid":None}]
     if "CONNECTED" in session:
         return render_template("accueil.html", connected=session['CONNECTED'], pseudo=session['PSEUDO'], role=session["ROLE"], wrRole=[user.User.ROLE[4], user.User.ROLE[2]], posts=rror)
     return render_template("accueil.html", connected=False, posts=rror, wrRole=[user.User.ROLE[4], user.User.ROLE[2]])
