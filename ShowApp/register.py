@@ -16,7 +16,7 @@ def s_inscrire(Password:str, Email:str, Nom:str, Prenom:str, Pseudo:str, Role:in
         if exist_user == None:
             creat = True
 
-            hash_password = hashlib.sha1(Password.encode()).hexdigest()
+            hash_password = hashlib.sha256(Password.encode()).hexdigest()
 
             request = "insert into Users (Email, Nom, Prenom, Pseudo, Password, Role, Date) values (?, ?, ?, ?, ?, ?, ?)"
             cursor.execute(request, [(Email), (Nom), (Prenom), (Pseudo), (hash_password), (Role), (str(datetime.now()))])
@@ -28,7 +28,7 @@ def login(Password:str, Email:str, database:str):
     connect = False
 
     with sqlite3.connect(database) as connection:
-        hash_password = hashlib.sha1(Password.encode()).hexdigest()
+        hash_password = hashlib.sha256(Password.encode()).hexdigest()
 
         cursor = connection.cursor()
         request = "select * FROM Users   WHERE Email = ? AND Password = ?"
@@ -43,7 +43,7 @@ def login(Password:str, Email:str, database:str):
 def update_password(password:str, new_password:str, Email:str, database:str) -> bool:
     ok = login(password, Email, database)
     if ok:
-        hash_password = hashlib.sha1(new_password.encode()).hexdigest()
+        hash_password = hashlib.sha256(new_password.encode()).hexdigest()
         with sqlite3.connect(database) as conn:
             cursor = conn.cursor()
             request = "UPDATE Users SET Password = ? WHERE Email = ?"
@@ -52,3 +52,11 @@ def update_password(password:str, new_password:str, Email:str, database:str) -> 
             conn.commit()
     return ok
 
+def new_password(new_password:str, Email:str, database:str) -> None:
+    hash_password = hashlib.sha256(new_password.encode()).hexdigest()
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request = "UPDATE Users SET Password = ? WHERE Email = ?"
+        cursor.execute(request, [(hash_password), (Email)])
+
+        conn.commit()

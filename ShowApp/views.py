@@ -32,6 +32,8 @@ def acceuil():
         requel = "delete from Users"
         cursor.execute(requel)
         db.commit()"""
+    test_email = Message("Verification LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[app.config["ADMINISTRATEUR_EMAIL"]])
+    test_email.html = text_email.welcome_text.replace("<name>", session["PSEUDO"])
     posts = gestion_data.return_postes_all(database)
     correct_posts = [parseur.parseur(post[4], post[1], post[2], post[3], post[5], post[6], post[7], post[12]) for post in posts]
     if "CONNECTED" in session:
@@ -55,8 +57,8 @@ def s_inscrire():
                 session['ID'] = the_user.ID_user
                 session['PSEUDO'] = the_user.Pseudo
                 session['ROLE'] = the_user.str_role()
-                test_email = Message("Verification LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                test_email.html = text_email.welcome_text.replace("<name>", session["PSEUDO"])
+                test_email = Message("Bienvenue sur LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
+                test_email.html = text_email.welcome_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<urlforinstagram>', "instaglink").replace('<urlforinstagramlogo>', url_for('static', filename='images/Instagram_icon.webp')).replace('<urlforwebsite>', url_for('acceuil'))
                 try:
                     email.send(test_email)
                 except:
@@ -163,14 +165,19 @@ def poster():
 def mot_de_passe_oublier():
     if request.method  == "POST":
         Email = request.form["email"]
-        test_email = Message("LPO SADA SHOW : Mot de passe oublier !", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-        test_email.html = text_email.change_password_text.replace("<name>", session["PSEUDO"]).replace("<password>", secrets.token_urlsafe(20))
-        try:
-            email.send(test_email)
-        except:
-            flash("Email invalide !", 'error')
-            return redirect(request.url)
-        return redirect(url_for("acceuil"))
+        if gestion_data.return_user(Email) != None:
+            new_password = secrets.token_urlsafe(20)
+            test_email = Message("LPO SADA SHOW : Mot de passe oublier !", sender=app.config["MAIL_USERNAME"], recipients=[Email])
+            test_email.html = text_email.change_password_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<password>', new_password)
+            try:
+                email.send(test_email)
+            except:
+                flash("Email invalide !", 'error')
+                return redirect(request.url)
+            register.new_password(new_password, Email, database)
+            return redirect(url_for("acceuil"))
+        else:
+            flash("Votre email n'est pas reconnue !", 'error')
     return render_template("forget_password.html")
 
 @app.route("/profile-kilo/<name>", methods=['GET', 'POST'])
@@ -242,14 +249,14 @@ def logout():
 
 @app.errorhandler(404)
 def page_not_found(error):
-    rror = [{"title":"404 : Tu t'es perdu dans les couloirs !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Il était une fois une créature mystérieuse qui hantait les couloirs sombres et délabrés du lycée de SADA. On disait qu'elle avait le pouvoir d'enlever les élèves qui s'aventuraient trop loin dans les méandres des couloirs. Les rumeurs disaient que cette créature était en réalité un monstre démoniaque qui se nourrissait de la peur et des cris des élèves. Les plus courageux disaient que le monstre prenait la forme d'un énorme loup noir, mais personne ne sait vraiment ce qu'il est vraiment. Les élèves étaient terrorisés à l'idée de le rencontrer et ils s'enfuyaient à toutes jambes dès qu'ils entendaient un bruit suspect. Beaucoup d'entre eux ont été enlevés par ce monstre, mais jamais personne ne les a retrouvés. Il règne encore aujourd'hui une atmosphère de mystère et de peur au sein du lycée de SADA.""", "image_font":"images/image404.png", "aud":None, "vid":None}]
+    rror = [{"title":"404 : Tu t'es perdu dans les couloirs !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Il était une fois une créature mystérieuse qui hantait les couloirs sombres et délabrés du lycée de SADA. On disait qu'elle avait le pouvoir d'enlever les élèves qui s'aventuraient trop loin dans les méandres des couloirs. Les rumeurs disaient que cette créature était en réalité un monstre démoniaque qui se nourrissait de la peur et des cris des élèves. Les plus courageux disaient que le monstre prenait la forme d'un énorme loup noir, mais personne ne sait vraiment ce qu'il est vraiment. Les élèves étaient terrorisés à l'idée de le rencontrer et ils s'enfuyaient à toutes jambes dès qu'ils entendaient un bruit suspect. Beaucoup d'entre eux ont été enlevés par ce monstre, mais jamais personne ne les a retrouvés. Il règne encore aujourd'hui une atmosphère de mystère et de peur au sein du lycée de SADA.""", "image_font":"images/image404.jpg", "aud":None, "vid":None}]
     if "CONNECTED" in session:
         return render_template("accueil.html", connected=session['CONNECTED'], pseudo=session['PSEUDO'], role=session["ROLE"], wrRole=[user.User.ROLE[4], user.User.ROLE[2]], posts=rror)
     return render_template("accueil.html", connected=False, posts=rror, wrRole=[user.User.ROLE[4], user.User.ROLE[2]])
 
 @app.errorhandler(500)
 def page_on(error):
-    rror = [{"title":"500 : ça ne marche pas  !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Notre développeur est génial voilà une photo pour vous le prouver (enfin c'est surtout pour nous nous le prouver !)""", "image_font":"images/image505.jpg", "aud":None, "vid":None}]
+    rror = [{"title":"500 : ça ne marche pas  !", "type":"article", "auteur":"LPO SADA SHOW", "date":str(datetime.now()), "text":"""Notre développeur est génial voilà une photo pour vous le prouver (enfin c'est surtout pour nous nous le prouver !)""", "image_font":"images/image505.png", "aud":None, "vid":None}]
     if "CONNECTED" in session:
         return render_template("accueil.html", connected=session['CONNECTED'], pseudo=session['PSEUDO'], role=session["ROLE"], wrRole=[user.User.ROLE[4], user.User.ROLE[2]], posts=rror)
     return render_template("accueil.html", connected=False, posts=rror, wrRole=[user.User.ROLE[4], user.User.ROLE[2]])
