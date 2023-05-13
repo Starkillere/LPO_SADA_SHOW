@@ -166,7 +166,7 @@ def mot_de_passe_oublier():
         if gestion_data.return_user(Email, database) != None:
             new_password = secrets.token_urlsafe(20)
             test_email = Message("LPO SADA SHOW : Mot de passe oublier !", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-            test_email.html = text_email.change_password_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<password>', new_password)
+            test_email.html = text_email.change_password_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", Email).replace('<password>', new_password)
             try:
                 email.send(test_email)
             except:

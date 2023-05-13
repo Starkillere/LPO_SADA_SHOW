@@ -2,20 +2,31 @@
 {% block page %}
 <div class="profile">
     <div class="profile-form">
+        <div class="alert" role="alert">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <ul class=flashes>
+                {% for category, message in messages %}
+                  <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+                </ul>
+              {% endif %}
+            {% endwith %}
+        </div>
         <form action="{{url_for('profile', name='set-ident')}}" method="post">
             <div class="form1">
-                <input type="text" id="inpute" value="{{user[1]}}" class="Email" placeholder="Email">
-                <input type="text" id="inpute" value="{{user[2]}}" class="Nom" placeholder="Nom">
-                <input type="text" id="inpute" value="{{user[3]}}" class="Prenom" placeholder="Prenom">
-                <input type="text" id="inpute" value="{{user[4]}}" class="Pseudo" placeholder="Pseudo">
+                <input type="text" id="inpute" value="{{user[1]}}" name="Email"  class="Email" placeholder="Email">
+                <input type="text" id="inpute" value="{{user[2]}}" name="Nom"    class="Nom" placeholder="Nom">
+                <input type="text" id="inpute" value="{{user[3]}}" name="Prenom" class="Prenom" placeholder="Prenom">
+                <input type="text" id="inpute" value="{{user[4]}}" name="Pseudo" class="Pseudo" placeholder="Pseudo">
             </div>
             <br><input type="submit" value="soumettre" class="btn-soum"><br><br>
         </form>
         
         <form action="{{url_for('profile', name='set-password')}}" method="post">
             <div class="form2">
-                <input type="password" id="inpute" class="new-password" placeholder="Nouveau mot de passe">
-                <input type="password" id="inpute" class="password" placeholder="Mot de passe">
+                <input type="password" id="inpute" name="new-password" class="new-password" placeholder="Nouveau mot de passe">
+                <input type="password" id="inpute" name="password" class="password" placeholder="Mot de passe">
             </div>
             <br><input type="submit" value="soumettre" class="btn-soum"><br>
         </form>

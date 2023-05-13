@@ -93,11 +93,11 @@ def save_post(database:str, data:dict):
 
         conn.commit()
         
-def update_ident(id:int, database:str, Email:str, Nom:str, Prenom:str, Pseudo:str) -> None:
+def update_ident(user_id:int, database:str, Email:str, Nom:str, Prenom:str, Pseudo:str) -> None:
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
         request = "UPDATE Users SET Email = ?, Nom = ?, Prenom = ?, Pseudo = ? WHERE ID_user = ?"
-        cursor.execute(request, [(Email), (Nom), (Prenom), (Pseudo)])
+        cursor.execute(request, [(Email), (Nom), (Prenom), (Pseudo), (user_id)])
 
         conn.commit()
 
