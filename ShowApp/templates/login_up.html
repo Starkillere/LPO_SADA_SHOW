@@ -4,11 +4,10 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="/static/images/favicon.ico">
+        <link rel="icon" href="{{url_for('static', filename='images/favicon.ico')}}">
         <title>LPO SADA SHOW</title>
     </head>
     <body>
-        
         <style>
             *
             {
@@ -17,6 +16,25 @@
                 text-decoration: none;
                 list-style: none;
             }
+            
+            ::-webkit-scrollbar {
+                width: 5px;
+            }
+            
+            ::-webkit-scrollbar-track {
+              box-shadow: inset 0 0 5px grey; 
+              border-radius: 10px;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+              background: #2374E1; 
+              border-radius: 10px;
+            }
+            
+            ::-webkit-scrollbar-thumb:hover {
+              background: #093875; 
+            }
+
 
             .main
             {

@@ -32,8 +32,6 @@ def acceuil():
         requel = "delete from Users"
         cursor.execute(requel)
         db.commit()"""
-    test_email = Message("Verification LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[app.config["ADMINISTRATEUR_EMAIL"]])
-    test_email.html = text_email.welcome_text.replace("<name>", session["PSEUDO"])
     posts = gestion_data.return_postes_all(database)
     correct_posts = [parseur.parseur(post[4], post[1], post[2], post[3], post[5], post[6], post[7], post[12]) for post in posts]
     if "CONNECTED" in session:
@@ -165,7 +163,7 @@ def poster():
 def mot_de_passe_oublier():
     if request.method  == "POST":
         Email = request.form["email"]
-        if gestion_data.return_user(Email) != None:
+        if gestion_data.return_user(Email, database) != None:
             new_password = secrets.token_urlsafe(20)
             test_email = Message("LPO SADA SHOW : Mot de passe oublier !", sender=app.config["MAIL_USERNAME"], recipients=[Email])
             test_email.html = text_email.change_password_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<password>', new_password)
