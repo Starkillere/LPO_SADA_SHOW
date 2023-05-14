@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 
 import sqlite3
+import csv
 
 def initialisation(database, Pseudo:str):
     with sqlite3.connect(database) as conn:
@@ -108,4 +109,18 @@ def delleteUser(id:int, database:str):
         cursor.execute(request, [(id)])
 
         conn.commit()
+
+def delletPost(database:str, title:str, auteur:str, date:str):
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request = "DELETE FROM Posts WHERE title = ? AND auteur = ? AND date = ?"
+        cursor.execute(request, [(title), (auteur), (date)])
+
+        conn.commit()
+
+def readcsvfile(csvfile:str):
+    with open(csvfile, 'r', encoding='utf-8') as fichier:
+        entete = csv.reader(fichier)[0]
+        users = [dict(user) for user in csv.DictReader(fichier)]
+        return (entete, users)
         

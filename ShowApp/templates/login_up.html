@@ -158,11 +158,11 @@
                     {% endwith %}
                 </div>
                 <form action="{{url_for('s_inscrire')}}" method="post">
-                    <input type="email" name="email" class="email" placeholder="Email">
-                    <input type="text" name="name" class="name" placeholder="Nom">
-                    <input type="text" name="surname" class="surname" placeholder="Prénom">
-                    <input type="text" name="in_name" class="in_name" placeholder="Pseudo">
-                    <input type="password" name="password" class="password" placeholder="Mot de passse">
+                    <input type="email" name="email" class="email" placeholder="Email" required>
+                    <input type="text" name="name" class="name" placeholder="Nom" required>
+                    <input type="text" name="surname" class="surname" placeholder="Prénom" required>
+                    <input type="text" name="in_name" class="in_name" placeholder="Pseudo"required>
+                    <input type="password" name="password" class="password" placeholder="Mot de passse" required>
                     <!--<input type="password" name="c-password" class="c-password" placeholder="Confirmer votre mot de passe">-->
                     <button class="btn-log" type="submit">Soumettre</button>
                 </form>

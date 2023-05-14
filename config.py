@@ -21,6 +21,8 @@ SOURCE_AUDIO = 'DIR_AUD/'
 SOURCE_VIDEO = 'DIR_VID/'
 SOURCE_IMAGE = 'DIR_IMG/'
 
+SOURCE_CSV = 'DIR_CSV/'
+
 if os.environ.get('DATABASE_URL') is None:
     basedir = os.path.abspath(os.path.dirname(__file__))
     DATABASE_URI = os.path.join(basedir, 'database.db')
@@ -36,3 +38,6 @@ if not os.path.exists(os.path.join(appdir, 'DIR_VID')):
 
 if not os.path.exists(os.path.join(appdir, 'DIR_IMG')):
     os.makedirs(os.path.join(appdir, 'DIR_IMG'))
+
+if not os.path.exists(os.path.join(appdir, 'DIR_CSV')):
+    os.makedirs(os.path.join(appdir, 'DIR_CSV'))

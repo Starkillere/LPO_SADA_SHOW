@@ -131,15 +131,29 @@
         <div class="main">
             <div class="form">
                 <h2>Inscription</h2>
-                <form action="{{url_for('administrateur')}}" method="post">
-                    <input type="email" name="email" class="email" placeholder="Email">
-                    <input type="text" name="name" class="name" placeholder="Nom">
-                    <input type="text" name="surname" class="surname" placeholder="Prénom">
-                    <input type="text" name="role" class="role" placeholder="role">
-                    <input type="text" name="in_name" class="in_name" placeholder="Pseudo">
-                    <input type="password" name="password" class="password" placeholder="Mot de passse">
-                    <input type="password" name="c-password" class="c-password" placeholder="Confirmer votre mot de passe">
+                <form action="{{url_for('administrateur', mode='add_normal')}}" method="post">
+                    <input type="email" name="email" class="email" placeholder="Email" required>
+                    <input type="text" name="name" class="name" placeholder="Nom" required>
+                    <input type="text" name="surname" class="surname" placeholder="Prénom" required>
+                    <input type="text" name="role" class="role" placeholder="role" required>
+                    <input type="text" name="in_name" class="in_name" placeholder="Pseudo" required>
+                    <input type="password" name="password" class="password" placeholder="Mot de passse" required>
+                    <input type="password" name="c-password" class="c-password" placeholder="Confirmer votre mot de passe" required>
                     <button class="btn-log" type="submit">Soumettre</button>
+                </form>
+            </div>
+            <div class="form1">
+                <h2>Inscription avec CSV</h2>
+                <form action="{{url_for('administrateur', mode='add_csv')}}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="csv_file" id="csv_file" accept="csv/*" enctype="multipart/form-data" required>
+                </form>
+            </div>
+            <div class="form2">
+                <h2>Delt-Post</h2>
+                <form action="{{url_for('administrateur', mode='delt_post')}}" method="post">
+                    <input type="file" name="title" id="title" class="title" placeholder="title" required>
+                    <input type="file" name="auteur" id="auteur" class="auteur" placeholder="auteur" required>
+                    <input type="file" name="date" id="date" class="date" placeholder="date" required>
                 </form>
             </div>
         </div>

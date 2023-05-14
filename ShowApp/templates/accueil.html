@@ -13,7 +13,7 @@
                         </select>
                     </div>
                     <div class="title">
-                        <input type="text" name="title" id="title" placeholder="Titre du post">
+                        <input type="text" name="title" id="title" placeholder="Titre du post" required>
                     </div>
                     <div class="post-input-container">
                         <textarea name="text" id="text"  rows="3" class="editable" required></textarea>
@@ -28,9 +28,9 @@
                         </div>
                     </div>
                     <div class="tags">
-                        <input type="text" name="tags" id="tags" placeholder="Tags séparer par une virgule (,)">
+                        <input type="text" name="tags" id="tags" placeholder="Tags séparer par une virgule (,)" required>
                     </div>
-                    <button type="submit">poster</button>
+                    <button type="button" id="je-post" onclick="IsOkToSend()">poster</button>
                 </div>
             </form>
         {% endif %}
@@ -45,7 +45,9 @@
                     </div>
                     <p class="post-text">{{post['text']|safe}}</p>
                     {% if post['type'] == "article" or post['type'] == "podcast" and 'image_font' in post %}
-                        <img src="{{url_for('static', filename=post['image_font'])}}" alt=" image de l'article">
+                        {% if not post['image_font'].split('.')[-1] == '' %}
+                            <img src="{{url_for('static', filename=post['image_font'])}}" alt=" image de l'article">
+                        {% endif %}
                     {%elif post['type'] == "interview"%}
                         <video controls>
                             <source src="{{url_for('static', filename=post['vid'])}}">
@@ -59,4 +61,5 @@
         </div>
     </div>
 </div>
+<script src="{{url_for('static', filename='js/check_files.js')}}"></script>
 {% endblock %}

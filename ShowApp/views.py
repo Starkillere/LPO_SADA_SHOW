@@ -20,6 +20,7 @@ database = app.config["DATABASE_URI"]
 img_link = app.config["SOURCE_IMAGE"]
 vid_link = app.config["SOURCE_VIDEO"]
 aud_link = app.config["SOURCE_AUDIO"]
+csv_link = app.config["SOURCE_CSV"]
 
 if not gestion_data.initialisation(database, app.config["ADMINISTRATEUR_PSEUDO"]):
     register.s_inscrire(app.config["ADMINISTRATEUR_PASSWORD"], app.config["ADMINISTRATEUR_EMAIL"], app.config["ADMINISTRATEUR_NOM"], app.config["ADMINISTRATEUR_PRENOM"], app.config["ADMINISTRATEUR_PSEUDO"], 4, database)
@@ -29,7 +30,7 @@ def acceuil():
     """import sqlite3
     with sqlite3.connect(database) as db:
         cursor = db.cursor()
-        requel = "delete from Users"
+        requel = "delete from Posts"
         cursor.execute(requel)
         db.commit()"""
     posts = gestion_data.return_postes_all(database)
@@ -129,7 +130,7 @@ def poster():
                 img_font = request.files["image"]
                 path_img = save_name+"."+img_ex
                 img_font_path = os.path.join((f"ShowApp/static/{img_link}"), path_img)
-                if not os.path.exists(img_font_path):
+                if not os.path.exists(img_font_path) and img_ex != '':
                     img_font.save(img_font_path)
                 img_font_path = f"{img_link}/{path_img}"
             
@@ -138,7 +139,7 @@ def poster():
                 podcast_ex = podcast.filename.split(".")[-1]
                 path_podcast = save_name+"."+podcast_ex
                 podcast_font_path = os.path.join(f"ShowApp/static/{aud_link}", path_podcast)
-                if not os.path.exists(podcast_font_path):
+                if not os.path.exists(podcast_font_path) and (img_ex != '' and podcast_ex != '') :
                     podcast.save(podcast_font_path)
                 podcast_font_path = f"{aud_link}/{path_podcast}"
 
@@ -147,7 +148,7 @@ def poster():
                 video_ex = video.filename.split(".")[-1]
                 path_video = save_name+"."+video_ex
                 video_font_path = os.path.join(f"ShowApp/static/{vid_link}", path_video)
-                if not os.path.exists(video_font_path):
+                if not os.path.exists(video_font_path) and video_ex != '':
                     video.save(video_font_path)
                 pth_video = f"{vid_link}/{path_video}"
             
@@ -200,39 +201,68 @@ def delete_user():
         return redirect(url_for("logout"))
     return redirect(url_for("acceuil"))
 
-@app.route("/admine-shell", methods=['GET', 'POST'])
-def administrateur():
+@app.route("/admine-shell/<mode>", methods=['GET', 'POST'])
+def administrateur(mode):
     if "CONNECTED" in session and session["ROLE"] == user.User.ROLE[4]:
         if request.method == "POST":
-            Email = request.form["email"]
-            nom = request.form["name"]
-            prenom = request.form["surname"]
-            pseudo = request.form["in_name"]
-            password = request.form["password"]
-            role = request.form["role"]
-            creat = register.s_inscrire(password, Email, nom, prenom, pseudo, int(role), database)
-            if creat:
-                test_email = Message("Administration LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[app.config["ADMINISTRATEUR_EMAIL"]])
-                if int(role) == 4:
-                    test_email.html = f"Un compte administrateur viens d'être crée !<br>Nom = {nom}<br>Prenom = {prenom}<br>Pseudo = {pseudo}<br>Email = {Email}"
-                elif int(role) == 2:
-                    test_email.html = f"Un compte journaliste viens d'être crée !<br>Nom = {nom}<br>Prenom = {prenom}<br>Pseudo = {pseudo}<br>Email = {Email}"
-                try:
-                    email.send(test_email)
-                except:
-                    pass
+            if mode == "add_normal":
+                Email = request.form["email"]
+                nom = request.form["name"]
+                prenom = request.form["surname"]
+                pseudo = request.form["in_name"]
+                password = secrets.token_urlsafe(24)
+                role = request.form["role"]
+                creat = register.s_inscrire(password, Email, nom, prenom, pseudo, int(role), database)
+                if creat:
+                    test_email = Message("Administration LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[app.config["ADMINISTRATEUR_EMAIL"]])
+                    if int(role) == 4:
+                        test_email.html = f"Un compte administrateur viens d'être crée !<br>Nom = {nom}<br>Prenom = {prenom}<br>Pseudo = {pseudo}<br>Email = {Email}"
+                    elif int(role) == 2:
+                        test_email.html = f"Un compte journaliste viens d'être crée !<br>Nom = {nom}<br>Prenom = {prenom}<br>Pseudo = {pseudo}<br>Email = {Email}"
+                    try:
+                        email.send(test_email)
+                    except:
+                        pass
 
-                test_email = Message("COMPTE LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                test_email.html = f"Un compte {user.User.ROLE[int(role)]} viens d'être crée pour vous !<br>Nom : ......... {nom}<br>Prenom : ....... {prenom}<br>Pseudo : ....... {pseudo}</b>Email : ....... {Email}</b>Mot de passe :....... {password}</b>"
-                try:
-                    email.send(test_email)
-                except:
-                    flash("Email invalide !", 'error')
-                    return redirect(url_for("delete_user"))
-                return redirect(url_for("acceuil"))
-            else:
-                flash("Pseudo ou Email déjà utilisé !", 'error')
-                return redirect(request.url)
+                    test_email = Message("COMPTE LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
+                    test_email.html = f"Un compte {user.User.ROLE[int(role)]} viens d'être crée pour vous !<br>Nom : ......... {nom}<br>Prenom : ....... {prenom}<br>Pseudo : ....... {pseudo}</b>Email : ....... {Email}</b>Mot de passe :....... {password}</b>"
+                    try:
+                        email.send(test_email)
+                    except:
+                        flash("Email invalide !", 'error')
+                        return redirect(url_for("delete_user"))
+                    return redirect(url_for("acceuil"))
+                else:
+                    flash("Pseudo ou Email déjà utilisé !", 'error')
+                    return redirect(request.url)
+            elif mode == "add_csv":
+                csv_files = request.files["csv_file"]
+                filename = f'csv-{str(datetime.now())}'+'.'+csv_files.filename.split(".")[-1]
+                path_csv = os.path.join((f"ShowApp/static/{csv_link}"), filename)
+                csv_files.save(path_csv)
+                entete, users =  gestion_data.readcsvfile(path_csv)
+                for user in users:
+                    password = secrets.token_urlsafe(24)
+                    creat = register.s_inscrire(password, user[entete[0]], user[entete[1]], user[entete[2]], user[entete[3]], int(user[entete[4]]), database)
+                    if creat:
+                        test_email = Message("Administration LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[app.config["ADMINISTRATEUR_EMAIL"]])
+                        if int(user[entete[4]]) == 4:
+                            test_email.html = f"Un compte administrateur viens d'être crée !<br>Nom = {user[entete[1]]}<br>Prenom = {user[entete[2]]}<br>Pseudo = {user[entete[3]]}<br>Email = {user[entete[0]]}"
+                        elif int(user[entete[4]]) == 2:
+                            test_email.html = f"Un compte journaliste viens d'être crée !<br>Nom = {user[entete[1]]}<br>Prenom = {user[entete[2]]}<br>Pseudo = {user[entete[3]]}<br>Email = {user[entete[0]]}"
+                        try:
+                            email.send(test_email)
+                        except:
+                            pass
+
+                        test_email = Message("COMPTE LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[user[entete[0]]])
+                        test_email.html = f"Un compte {user.User.ROLE[int(user[entete[4]])]} viens d'être crée pour vous !<br>Nom : ......... {user[entete[1]]}<br>Prenom : ....... {user[entete[2]]}<br>Pseudo : ....... {user[entete[3]]}</b>Email : ....... {user[entete[0]]}</b>Mot de passe :....... {password}</b>"
+                        try:
+                            email.send(test_email)
+                        except:
+                            pass
+            elif mode == "delt_post":
+                gestion_data.delletPost(database, request.form["title"], request.form["auteur"], request.form["date"])
         return render_template("administrateur.html")
     return redirect(url_for("acceuil"))
 
