@@ -12,9 +12,9 @@ MAIL_USE_TLS = True
 MAIL_USE_SSL = False
 
 ADMINISTRATEUR_PASSWORD = "/6Xnnn_3P//z20rEAkr@kk/r5A%ZXeE@"
-ADMINISTRATEUR_EMAIL = "anrezkia531@gmail.com"
-ADMINISTRATEUR_NOM = "Ayouba"
-ADMINISTRATEUR_PRENOM = "Anrezki"
+ADMINISTRATEUR_EMAIL = "adm.lposadashow@gmail.com"
+ADMINISTRATEUR_NOM = "Administrateur"
+ADMINISTRATEUR_PRENOM = "Administrateur"
 ADMINISTRATEUR_PSEUDO = "Administrateur"
 
 SOURCE_AUDIO = 'DIR_AUD/'
