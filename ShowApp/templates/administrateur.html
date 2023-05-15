@@ -38,19 +38,19 @@
             }
 
 
-            .main
-            {
-                width: 100%;
-                background: linear-gradient(rgba(0, 0, 0, 0.5),rgb(0, 0, 0, 0.3)), url("/static/images/background_LPO_SADA.jpg");
-                background-position: center;
-                background-size: cover;
-                height: 100vh;
-            }
+            body
+        {
+            background-color: #f8f8f8;
+            background-image: /*linear-gradient(rgba(0, 0, 0, 0.5),rgb(0, 0, 0, 0.3)),*/ url("/static/images/background_LPO_SADA.jpg");
+            /*background-position: center;*/
+            background-attachment: fixed;
+            background-size:cover;
+        }
 
             .form
             {
                 width: 250px;
-                height: 550px;
+                height: 1350px;
                 background: linear-gradient(to top, rgba(0,0,0,0.8)50%, rgba(0,0,0,0.8)50%);
                 position: absolute;
                 top:50px;
@@ -58,7 +58,7 @@
                 border-radius: 10px;
                 padding: 25px;
             }
-            .form h2
+            .form h2, .form1 h2, .form2 h2
             {
                 width: 220px;
                 font-family: sans-serif;
@@ -71,7 +71,7 @@
                 padding: 8px;
             }
 
-            .form input
+            .form input, .form1 input, .form2 input
             {
                 width: 240px;
                 height: 35px;
@@ -119,6 +119,7 @@
                 border: none;
                 color: black;
             }
+            
             @media screen and (max-width: 900px)
             {
                 .form
@@ -141,20 +142,26 @@
                     <input type="password" name="c-password" class="c-password" placeholder="Confirmer votre mot de passe" required>
                     <button class="btn-log" type="submit">Soumettre</button>
                 </form>
-            </div>
-            <div class="form1">
-                <h2>Inscription avec CSV</h2>
+            
+                <br><br><h2>Inscription avec CSV</h2>
                 <form action="{{url_for('administrateur', mode='add_csv')}}" method="post" enctype="multipart/form-data">
                     <input type="file" name="csv_file" id="csv_file" accept="csv/*" enctype="multipart/form-data" required>
-                </form>
-            </div>
-            <div class="form2">
-                <h2>Delt-Post</h2>
+                    <button class="btn-log" type="submit">Soumettre</button>
+                </form><br><br>
+
+                <br><br><h2>Delt-Post</h2>
                 <form action="{{url_for('administrateur', mode='delt_post')}}" method="post">
-                    <input type="file" name="title" id="title" class="title" placeholder="title" required>
-                    <input type="file" name="auteur" id="auteur" class="auteur" placeholder="auteur" required>
-                    <input type="file" name="date" id="date" class="date" placeholder="date" required>
-                </form>
+                    <input type="text" name="title" id="title" class="title" placeholder="title" required>
+                    <input type="text" name="auteur" id="auteur" class="auteur" placeholder="auteur" required>
+                    <input type="text" name="date" id="date" class="date" placeholder="date" required>
+                    <button class="btn-log" type="submit">Soumettre</button>
+                </form><br><br>
+
+                <br><br><h2>Delt-User</h2>
+                <form action="{{url_for('administrateur', mode='delt_user')}}" method="post">
+                    <input type="text" name="Pseudo" id="pseudo" class="pseudo" placeholder="pseudo" required>
+                    <button class="btn-log" type="submit">Soumettre</button>
+                </form><br><br>
             </div>
         </div>
     </body>

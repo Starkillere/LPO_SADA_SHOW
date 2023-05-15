@@ -22,7 +22,7 @@
                     <li><a href="{{url_for('rch_or_filter_by', content='filter-by-podcast')}}"><i class="fa-solid fa-podcast fa-2xl" style="color: #ffffff;"></i></a></li>
                     <li><a href="{{url_for('rch_or_filter_by', content='filter-by-interview')}}"><i class="fa-solid fa-clipboard-question fa-2xl" style="color: #ffffff;"></i></a></li>
                     {% if role == wrRole[0] %}
-                        <li><a href="{{url_for('administrateur')}}"><i class="fa-solid fa-bug fa-2xl" style="color: #ffffff;"></i></a></li>
+                        <li><a href="{{url_for('administrateur', mode='ni-pio-see')}}"><i class="fa-solid fa-bug fa-2xl" style="color: #ffffff;"></i></a></li>
                     {% endif %}
                 </ul>
             </div>

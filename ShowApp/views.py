@@ -57,7 +57,7 @@ def s_inscrire():
                 session['PSEUDO'] = the_user.Pseudo
                 session['ROLE'] = the_user.str_role()
                 test_email = Message("Bienvenue sur LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                test_email.html = text_email.welcome_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<urlforinstagram>', "instaglink").replace('<urlforinstagramlogo>', url_for('static', filename='images/Instagram_icon.webp')).replace('<urlforwebsite>', url_for('acceuil'))
+                test_email.html = text_email.welcome_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<urlforinstagram>', "https://instagram.com/lpo.sadashow?igshid=ZGUzMzM3NWJiOQ==").replace('<urlforinstagramlogo>', url_for('static', filename='images/Instagram_icon.webp')).replace('<urlforwebsite>', url_for('acceuil'))
                 try:
                     email.send(test_email)
                 except:
@@ -184,7 +184,7 @@ def profile(name):
     if "CONNECTED" in session:
         if request.method == "POST":
             if name == "set-ident":
-                gestion_data.update_ident(session["ID"], database, request.form["Email"], request.form["Nom"], request.form["Prenom"], request.form["Pseudo"])
+                gestion_data.update_ident(session["ID"], database, request.form["Email"], request.form["Nom"], request.form["Prenom"])
             elif name == "set-password":
                 Email = (gestion_data.return_user_by_id(session["ID"], database))[1]
                 ok = register.update_password(request.form["password"], request.form["new-password"], Email, database)
@@ -241,28 +241,30 @@ def administrateur(mode):
                 path_csv = os.path.join((f"ShowApp/static/{csv_link}"), filename)
                 csv_files.save(path_csv)
                 entete, users =  gestion_data.readcsvfile(path_csv)
-                for user in users:
+                for useri in users:
                     password = secrets.token_urlsafe(24)
-                    creat = register.s_inscrire(password, user[entete[0]], user[entete[1]], user[entete[2]], user[entete[3]], int(user[entete[4]]), database)
+                    creat = register.s_inscrire(password, useri[entete[0]], useri[entete[1]], useri[entete[2]], useri[entete[3]], int(useri[entete[4]]), database)
                     if creat:
                         test_email = Message("Administration LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[app.config["ADMINISTRATEUR_EMAIL"]])
-                        if int(user[entete[4]]) == 4:
-                            test_email.html = f"Un compte administrateur viens d'être crée !<br>Nom = {user[entete[1]]}<br>Prenom = {user[entete[2]]}<br>Pseudo = {user[entete[3]]}<br>Email = {user[entete[0]]}"
-                        elif int(user[entete[4]]) == 2:
-                            test_email.html = f"Un compte journaliste viens d'être crée !<br>Nom = {user[entete[1]]}<br>Prenom = {user[entete[2]]}<br>Pseudo = {user[entete[3]]}<br>Email = {user[entete[0]]}"
+                        if int(useri[entete[4]]) == 4:
+                            test_email.html = f"Un compte administrateur viens d'être crée !<br>Nom = {useri[entete[1]]}<br>Prenom = {useri[entete[2]]}<br>Pseudo = {useri[entete[3]]}<br>Email = {useri[entete[0]]}"
+                        elif int(useri[entete[4]]) == 2:
+                            test_email.html = f"Un compte journaliste viens d'être crée !<br>Nom = {useri[entete[1]]}<br>Prenom = {useri[entete[2]]}<br>Pseudo = {useri[entete[3]]}<br>Email = {useri[entete[0]]}"
                         try:
                             email.send(test_email)
                         except:
                             pass
 
-                        test_email = Message("COMPTE LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[user[entete[0]]])
-                        test_email.html = f"Un compte {user.User.ROLE[int(user[entete[4]])]} viens d'être crée pour vous !<br>Nom : ......... {user[entete[1]]}<br>Prenom : ....... {user[entete[2]]}<br>Pseudo : ....... {user[entete[3]]}</b>Email : ....... {user[entete[0]]}</b>Mot de passe :....... {password}</b>"
+                        test_email = Message("COMPTE LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[useri[entete[0]]])
+                        test_email.html = f"Un compte {user.User.ROLE[int(useri[entete[4]])]} viens d'être crée pour vous !<br>Nom : ......... {useri[entete[1]]}<br>Prenom : ....... {useri[entete[2]]}<br>Pseudo : ....... {useri[entete[3]]}</b>Email : ....... {user[entete[0]]}</b>Mot de passe :....... {password}</b>"
                         try:
                             email.send(test_email)
                         except:
                             pass
             elif mode == "delt_post":
                 gestion_data.delletPost(database, request.form["title"], request.form["auteur"], request.form["date"])
+            elif mode == "delt_user":
+                gestion_data.delleteUser_width_psedo(request.form["pseudo"], database)
         return render_template("administrateur.html")
     return redirect(url_for("acceuil"))
 

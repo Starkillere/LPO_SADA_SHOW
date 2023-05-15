@@ -110,6 +110,14 @@ def delleteUser(id:int, database:str):
 
         conn.commit()
 
+def delleteUser_width_psedo(pseudo:str, database:str):
+    with sqlite3.connect(database) as conn:
+        cursor = conn.cursor()
+        request = "DELETE FROM Users WHERE pseudo = ?"
+        cursor.execute(request, [(pseudo)])
+
+        conn.commit()
+
 def delletPost(database:str, title:str, auteur:str, date:str):
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
