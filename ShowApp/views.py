@@ -22,6 +22,8 @@ vid_link = app.config["SOURCE_VIDEO"]
 aud_link = app.config["SOURCE_AUDIO"]
 csv_link = app.config["SOURCE_CSV"]
 
+gestion_data.init_db(database)
+
 if not gestion_data.initialisation(database, app.config["ADMINISTRATEUR_PSEUDO"]):
     register.s_inscrire(app.config["ADMINISTRATEUR_PASSWORD"], app.config["ADMINISTRATEUR_EMAIL"], app.config["ADMINISTRATEUR_NOM"], app.config["ADMINISTRATEUR_PRENOM"], app.config["ADMINISTRATEUR_PSEUDO"], 4, database)
 

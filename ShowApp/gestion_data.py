@@ -3,6 +3,45 @@
 import sqlite3
 import csv
 
+def init_db(database):
+    with sqlite3.connect(database) as conn:
+        cursor =  conn.cursor()
+        requete = """CREATE TABLE IF NOT EXISTS "Posts" (
+                	"ID_Post"	INTEGER NOT NULL UNIQUE,
+                	"type"	TEXT NOT NULL,
+                	"auteur"	TEXT NOT NULL,
+                	"date"	TEXT NOT NULL,
+                	"title"	TEXT NOT NULL,
+                	"description"	TEXT NOT NULL,
+                	"img"	TEXT,
+                	"aud"	TEXT,
+                	"tags"	TEXT NOT NULL,
+                	"vue"	INTEGER,
+                	"like"	INTEGER,
+                	"pertinence"	INTEGER,
+                	"vid"	TEXT,
+                	PRIMARY KEY("ID_Post" AUTOINCREMENT)
+                );"""
+        
+        cursor.execute(requete)
+
+        request = """CREATE TABLE IF NOT EXISTS "Users" (
+                	"ID_user"	INTEGER NOT NULL UNIQUE,
+                	"Email"	TEXT NOT NULL UNIQUE,
+                	"Nom"	TEXT NOT NULL,
+                	"Prenom"	TEXT NOT NULL,
+                	"Pseudo"	TEXT NOT NULL UNIQUE,
+                	"Password"	TEXT NOT NULL,
+                	"Role"	INTEGER NOT NULL,
+                	"Date"	TEXT NOT NULL,
+                	PRIMARY KEY("ID_user" AUTOINCREMENT)
+                );"""
+        
+        cursor.execute(request)
+
+        conn.commit()
+
+        
 def initialisation(database, Pseudo:str):
     with sqlite3.connect(database) as conn:
         cursor = conn.cursor()
@@ -131,4 +170,4 @@ def readcsvfile(csvfile:str):
         entete = csv.reader(fichier)[0]
         users = [dict(user) for user in csv.DictReader(fichier)]
         return (entete, users)
-        
+
