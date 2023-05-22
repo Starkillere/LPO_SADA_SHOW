@@ -23,11 +23,14 @@ SOURCE_IMAGE = 'DIR_IMG/'
 
 SOURCE_CSV = 'DIR_CSV/'
 
+# Database initialization
 if os.environ.get('DATABASE_URL') is None:
     basedir = os.path.abspath(os.path.dirname(__file__))
-    DATABASE_URI = os.path.join(basedir, 'database.db')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'database.db')
 else:
-    DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    if SQLALCHEMY_DATABASE_URI.startswith("postgres://"):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace("postgres://", "postgresql://", 1)
 
 appdir = os.path.join(os.path.dirname(__file__), 'ShowApp/static')
 if not os.path.exists(os.path.join(appdir, 'DIR_AUD')):

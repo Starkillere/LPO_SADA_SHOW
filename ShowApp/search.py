@@ -2,23 +2,17 @@
 
 from stop_words import get_stop_words
 from simplemma import lemmatize, is_known
-import sqlite3
 from spellchecker import SpellChecker
 
 __all__ = ["Search"]
 
-def Import_format_data(database:str) -> dict:
-    with sqlite3.connect(database) as conn: 
-        cursor = conn.cursor()
-        request = "select * from Posts"
-        cursor.execute(request)
-        Posts = cursor.fetchall()
-
+def Import_format_data(table) -> dict:
+    Posts = table.query.all()
     dict_Posts = {}
     keys = ["TITLE", "TAGS"]
     for i in range(len(Posts)):
-        values = [Posts[i][j] for j in [4,8]]
-        dict_Posts[Posts[i][0]] = {k:v for (k,v) in zip(keys, values)}
+        values = [Posts[i].title, Posts[i].tags]
+        dict_Posts[Posts[i].ID_Post] = {k:v for (k,v) in zip(keys, values)}
         
     return dict_Posts
 
@@ -43,9 +37,9 @@ def Lemmatisation(word:str) -> str:
     return word
 
 class Search:
-    def __init__(self, user_research:str, database:str) -> None:
+    def __init__(self, user_research:str, table) -> None:
         self.user_research = [Lemmatisation(mot) for mot in mots_vide_supprression([corecteur_orthographique(i )for i in user_research.split(" ")])]
-        self.data = Import_format_data(database)
+        self.data = Import_format_data(table)
         self.result = self._start_reaserch()
     
     def __str__(self) -> str:
