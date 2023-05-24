@@ -5,6 +5,7 @@ from werkzeug.utils import secure_filename
 from flask_mail import Mail, Message
 from . import user, gestion_data, register, poste, search, parseur, text_email
 import secrets
+from PIL import Image
 from datetime import timedelta
 from datetime import datetime
 import os
@@ -132,8 +133,18 @@ def poster():
                 img_font = request.files["image"]
                 path_img = save_name+"."+img_ex
                 img_font_path = os.path.join((f"ShowApp/static/{img_link}"), path_img)
+                exif_img_font_path = os.path.join((f"ShowApp/static/{img_link}"), "exif"+path_img)
                 if not os.path.exists(img_font_path) and img_ex != '':
-                    img_font.save(img_font_path)
+                    img_font.save(exif_img_font_path)
+                    image = Image.open(exif_img_font_path)
+                    data = list(image.getdata())
+                    image_without_exif = Image.new(image.mode, image.size)
+                    image_without_exif.putdata(data)
+                    image_without_exif.save(img_font_path)
+                    image_without_exif.close()
+                    if os.path.exists(exif_img_font_path):
+                        os.remove(exif_img_font_path)
+
                 img_font_path = f"{img_link}/{path_img}"
             
             if type == "podcast":
@@ -227,7 +238,7 @@ def administrateur(mode):
                         pass
 
                     test_email = Message("COMPTE LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                    test_email.html = f"Un compte {user.User.ROLE[int(role)]} viens d'être crée pour vous !<br>Nom : ......... {nom}<br>Prenom : ....... {prenom}<br>Pseudo : ....... {pseudo}</b>Email : ....... {Email}</b>Mot de passe :....... {password}</b>"
+                    test_email.html = f"Un compte {user.User.ROLE[int(role)]} viens d'être crée pour vous !<br>Nom : ......... {nom}<br>Prenom : ....... {prenom}<br>Pseudo : ....... {pseudo}<br>Email : ....... {Email}<br>Mot de passe :....... {password}<br>"
                     try:
                         email.send(test_email)
                     except:
