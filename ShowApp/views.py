@@ -141,10 +141,13 @@ def rch_or_filter_by(content):
     if request.method == "POST":
         if content.startswith("rch"):
             text = request.form["search"]
-            posts = Posts.query.filter_by(ID_Post=search.Search(text, Posts).result[0]).first()
-            if posts == None:
+            posts = []
+            result = search.Search(text, Posts).result
+            if result == []:
                 return redirect(url_for("acceuil"))
-            correct_posts = [parseur.parseur(posts.title, posts.type, posts.auteur, posts.date, posts.description, posts.img, posts.aud, posts.vid)]
+            for ght in result:
+                posts.append(Posts.query.filter_by(ID_Post=ght).first())
+            correct_posts = [parseur.parseur(post.title, post.type, post.auteur, post.date, post.description, post.img, post.aud, post.vid) for post in posts]
             if "CONNECTED" in session:
                 return render_template("accueil.html", posts=correct_posts, connected=session['CONNECTED'], pseudo=session['PSEUDO'], role=session["ROLE"], wrRole=[user.User.ROLE[4], user.User.ROLE[2]])
             return render_template("accueil.html", posts=correct_posts, connected=False, wrRole=[user.User.ROLE[4], user.User.ROLE[2]])
