@@ -103,7 +103,7 @@ def s_inscrire():
                 session['PSEUDO'] = the_user.Pseudo
                 session['ROLE'] = user.User.ROLE[the_user.Role]
                 test_email = Message("Bienvenue sur LPO SADA SHOW", sender=app.config["MAIL_USERNAME"], recipients=[Email])
-                test_email.html = text_email.welcome_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<urlforinstagram>', "https://instagram.com/lpo.sadashow?igshid=ZGUzMzM3NWJiOQ==").replace('<urlforinstagramlogo>', url_for('static', filename='images/Instagram_icon.webp')).replace('<urlforwebsite>', url_for('acceuil'))
+                test_email.html = text_email.welcome_text.replace("<urlforlogo>", url_for('static', filename='images/LPO_SADA SHOW_CADRE_NOIR.png')).replace("<username>", session["PSEUDO"]).replace('<urlforinstagram>', "https://www.instagram.com/lpo.sadashow/").replace('<urlforinstagramlogo>', url_for('static', filename='images/Instagram_icon.webp')).replace('<urlforwebsite>', url_for('acceuil'))
                 try:
                     email.send(test_email)
                 except:
