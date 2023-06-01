@@ -6,12 +6,21 @@ from spellchecker import SpellChecker
 
 __all__ = ["Search"]
 
+def save_on(mode:str, elmt:str) -> str:
+    if mode == "title":
+        title = [f"{Lemmatisation(mot)}," for mot in mots_vide_supprression([corecteur_orthographique(i) for i in elmt.split(" ")])]
+        content = ''.join(title)
+    elif mode == "tags":
+        tags = [f"{Lemmatisation(mot)}," for mot in mots_vide_supprression([corecteur_orthographique(i) for i in elmt.split(",")])]
+        content = ''.join(tags)
+    return content
+
 def Import_format_data(table) -> dict:
     Posts = table.query.all()
     dict_Posts = {}
-    keys = ["TITLE", "TAGS"]
+    keys = ["TAGS"]
     for i in range(len(Posts)):
-        values = [Posts[i].title, Posts[i].tags]
+        values = [Posts[i].tags]
         dict_Posts[Posts[i].ID_Post] = {k:v for (k,v) in zip(keys, values)}
         
     return dict_Posts
@@ -38,7 +47,7 @@ def Lemmatisation(word:str) -> str:
 
 class Search:
     def __init__(self, user_research:str, table) -> None:
-        self.user_research = [Lemmatisation(mot) for mot in mots_vide_supprression([corecteur_orthographique(i )for i in user_research.split(" ")])]
+        self.user_research = [Lemmatisation(mot) for mot in mots_vide_supprression([corecteur_orthographique(i)for i in user_research.split(" ")])]
         self.data = Import_format_data(table)
         self.result = self._start_reaserch()
     
@@ -48,26 +57,14 @@ class Search:
     def __repr__(self) -> str:
         return f"Recherche = {self.user_research}"
     
-    def __search_with_title(self) -> list:
-        compatible_id = []
-        for key,value in self.data.items():
-            title = [Lemmatisation(mot) for mot in mots_vide_supprression([corecteur_orthographique(i) for i in value["TITLE"].split(" ")])]
-            count = 0
-            for i in range(len(self.user_research)):
-                if self.user_research[i] in title:
-                    count += 1 
-            if count >= (abs(len(title)-len(self.user_research))):
-                compatible_id.append(key)
-        return compatible_id
-    
     def __search_with_tags(self) -> list:
         compatible_id = []
         for key,value in self.data.items():
-            tags = [Lemmatisation(mot) for mot in mots_vide_supprression([corecteur_orthographique(i) for i in value["TAGS"].split(",")])]
+            tags = [mot for mot in [i for i in value["TAGS"].split(",")]]
             for i in range(len(self.user_research)):
                 if self.user_research[i] in tags:
                     compatible_id.append(key)
         return compatible_id
 
     def _start_reaserch(self) -> list:
-        return self.__search_with_title()+self.__search_with_tags()
+        return self.__search_with_tags()

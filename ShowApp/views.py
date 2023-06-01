@@ -170,6 +170,8 @@ def poster():
             text = request.form["text"]
             tags = request.form["tags"]
 
+            tags = (search.save_on("title", title)+search.save_on("tags", tags))[:-1]
+
             save_name = secure_filename(title.replace(" ", "-"))
 
             if type == "article" or type == "podcast":
@@ -249,9 +251,23 @@ def profile(name):
         if request.method == "POST":
             if name == "set-ident":
                 puser = Users.query.get(session["ID"])
-                puser.Email = request.form["Email"]
                 puser.Nom = request.form["Nom"]
                 puser.Prenom = request.form["Prenom"]
+
+                pseudo = request.form["Pseudo"]
+                 
+                if Users.query.filter_by(Pseudo=pseudo).first() == None or pseudo == session["PSEUDO"]:
+                    puser.Pseudo = pseudo
+                else:
+                    flash("Pseudo déjà utilisé !", 'error')
+                
+                email = request.form["Email"]
+
+                if Users.query.filter_by(Email=email).first() == None or email == (Users.query.filter_by(ID_user=session["ID"]).first()).Email:
+                    puser.Email = email
+                else:
+                    flash("Email déjà utilisé !", 'error')
+
                 db.session.commit()
             elif name == "set-password":
                 ok_user = Users.query.filter_by(ID_user=session["ID"]).first()
@@ -359,7 +375,7 @@ def administrateur(mode):
                 db.session.delete(post)
                 db.session.commit()
             elif mode == "delt_user":
-                ok_user = Users.query.filter_by(Pseudo=request.form["pseudo"])
+                ok_user = Users.query.filter_by(Pseudo=request.form["pseudo"]).first()
                 puser = Users.query.get(ok_user.ID_user)
                 db.session.delete(puser)
                 db.session.commit()
