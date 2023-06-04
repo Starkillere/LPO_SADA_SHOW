@@ -140,7 +140,12 @@ def login():
 def rch_or_filter_by(content):
     if request.method == "POST":
         if content.startswith("rch"):
-            text = request.form["search"]
+            if request.form["search"] != '':
+                text = request.form["search"]
+            elif request.form["searchm"] != '':
+                text = request.form["searchm"]
+            else:
+                text = request.form["search"]
             posts = []
             result = search.Search(text, Posts).result
             if result == []:
